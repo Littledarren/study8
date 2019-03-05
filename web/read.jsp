@@ -12,7 +12,7 @@
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <%@ include file="nav.txt" %>
+    <%--<%@ include file="nav.txt" %>--%>
 <body style="background-color:#00FF00">
 <div class="container">
     <div class="row">

@@ -4,5 +4,19 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
+    <welcome-file-list>
+        <welcome-file>index</welcome-file>
+    </welcome-file-list>
+
+
+    <servlet>
+        <servlet-name>helpIndex</servlet-name>
+        <servlet-class>myservlet.HelpIndex</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>helpIndex</servlet-name>
+        <url-pattern>/index</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>
