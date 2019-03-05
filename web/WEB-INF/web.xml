@@ -18,5 +18,14 @@
         <url-pattern>/index</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>helpRegister</servlet-name>
+        <servlet-class>myservlet.HelpRegister</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>helpRegister</servlet-name>
+        <url-pattern>/handlerRegister</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>

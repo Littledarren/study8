@@ -1,38 +1,32 @@
 package myservlet;
 
-
-import mybean.data.Index;
-import myutil.CommonHelper;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
-public class HelpIndex extends HttpServlet {
-
+public class HelpRegister extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /* TODO
-
-
-         */
-
-        CommonHelper.loginHelp(req);
-
-        Index index = new Index();
-        index.setMessageName(new String[]{"aaa", "bbb", "ccc"});
-        req.setAttribute("index", index);
-
-        req.getRequestDispatcher("/index.jsp").forward(req, resp);
+        this.doPost(req, resp);
     }
-
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.doGet(req, resp);
+        /*
+            TODO
+            get parameters
+            check validation:
+                1. check passwords
+                2. check email not in database
+            if ok:
+                store in db
+                -> registerSuccess.jsp
+            else:
+                request.setAttribute("success", "false");
+                -> register.jsp
+         */
     }
 }

@@ -1,6 +1,6 @@
 <%@ page import="mybean.data.Login"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
-<jsp:useBean id="login" class="mybean.data.Login" scope="request" />
+<jsp:useBean id="login" type="mybean.data.Login" scope="session" />
 
 <nav class="navbar navbar-default" role="navigation">
 	<div class="container-fluid">		

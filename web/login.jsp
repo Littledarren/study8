@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <jsp:useBean id="login" class="mybean.data.Login" scope="request"/>
 <!doctype html>
 <html>
@@ -25,7 +25,7 @@
         <input type="password" id="inputPassword" class="form-control" placeholder="密码" name="password" required/><br/>
 
         <!--判断是否是登陆失败后跳转过来的页面-->
-        <% if (login.getSuccess() == false) { %>
+        <% if (login.isSuccess() == false) { %>
         <p style="color:#FF0000">您输入的账号或密码错误，请重新输入</p>
         <% } %>
 

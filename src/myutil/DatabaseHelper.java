@@ -1,3 +1,5 @@
+package myutil;
+
 import com.alibaba.fastjson.JSONObject;
 
 import java.io.BufferedReader;

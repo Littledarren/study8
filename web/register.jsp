@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!doctype html>
 <html>
 <head>
@@ -13,7 +13,7 @@
 <body>
 <div class="container col-md-5" style="margin:auto;margin-top:5%">
 
-    <form autocomplete="on" action="./servlet/handleRegister.java" method="POST">
+    <form autocomplete="on" action="/handleRegister" method="POST">
         <h2 align="center">注册</h2>
 
         <label class="sr-only">电子邮箱</label>
@@ -39,6 +39,7 @@
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
     </form>
+    <% boolean success = (boolean) request.getAttribute("success"); %>
 </div>
 </body>
 </html>
