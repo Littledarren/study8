@@ -2,10 +2,9 @@ package mybean.data;
 
 
 public class Index {
-    String[] messageID = {"1", "2", "3"}; //消息ID
-    String[] messageName = {"test1", "test2", "test3"}; //消息名
+    String[] messageIDs = {"1", "2", "3"}; //消息ID
+    String[] messages = {"test1", "test2", "test3"}; //消息内容
     String postType = "recommended";  //列出的博文类型
-
     Post[] posts = new Post[3];
 
     {
@@ -22,20 +21,20 @@ public class Index {
         this.posts = posts;
     }
 
-    public String[] getMessageID() {
-        return messageID;
+    public String[] getMessageIDs() {
+        return messageIDs;
     }
 
-    public void setMessageID(String[] messageID) {
-        this.messageID = messageID;
+    public void setMessageIDs(String[] messageID) {
+        this.messageIDs = messageIDs;
     }
 
-    public String[] getMessageName() {
-        return messageName;
+    public String[] getMessages() {
+        return messages;
     }
 
-    public void setMessageName(String[] messageName) {
-        this.messageName = messageName;
+    public void setMessages(String[] message) {
+        this.messages = messages;
     }
 
     public String getPostType() {

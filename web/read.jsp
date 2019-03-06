@@ -1,5 +1,6 @@
+<%@ page import="mybean.data.Post" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<jsp:useBean id="personalInfo" class="mybean.data.PersonalInfo" scope="request"/>
+<jsp:useBean id="personalInfo" type="mybean.data.PersonalInfo" scope="request"/>
 <jsp:useBean id="post" type="mybean.data.Post" scope="request"/>
 <!doctype html>
 <html>
@@ -19,22 +20,22 @@
             <!--博主信息-->
             <div style="height:270px;background-color:#FFFFFF;border-bottom:2px solid #00FF00;">
                 <p>昵称：
-                    <jsp:getProperty name="personalInfo" property="nickname"/>
+                    <%= personalInfo.getNickname() %>
                 </p>
                 <p>性别：
-                    <jsp:getProperty name="personalInfo" property="sex"/>
+                    <%= personalInfo.getSex() %>
                 </p>
                 <p>高校：
-                    <jsp:getProperty name="personalInfo" property="university"/>
+                    <%= personalInfo.getUniversity() %>
                 </p>
                 <p>专业：
-                    <jsp:getProperty name="personalInfo" property="major"/>
+                    <%= personalInfo.getMajor() %>
                 </p>
                 <p>积分：
-                    <jsp:getProperty name="personalInfo" property="score"/>
+                    <%= personalInfo.getScore() %>
                 </p>
                 <p>排名：
-                    <jsp:getProperty name="personalInfo" property="rank"/>
+                    <%= personalInfo.getRank() %>
                 </p>
                 <table class="table">
                     <thead>
@@ -49,19 +50,19 @@
                     <tbody>
                     <tr>
                         <td>
-                            <jsp:getProperty name="personalInfo" property="numArticles"/>
+                            <%= personalInfo.getNumArticles() %>
                         </td>
                         <td>
-                            <jsp:getProperty name="personalInfo" property="numFans"/>
+                            <%= personalInfo.getNumFans() %>
                         </td>
                         <td>
-                            <jsp:getProperty name="personalInfo" property="numLikes"/>
+                            <%= personalInfo.getNumLikes() %>
                         </td>
                         <td>
-                            <jsp:getProperty name="personalInfo" property="numComments"/>
+                            <%= personalInfo.getNumComments() %>
                         </td>
                         <td>
-                            <jsp:getProperty name="personalInfo" property="numReads"/>
+                            <%= personalInfo.getNumReads() %>
                         </td>
                     </tr>
                     </tbody>
@@ -72,33 +73,35 @@
             <div style="height:200px;background-color:#FFFFFF">
                 <h5><b>最新博文</b></h5>
                 <ul>
-                    <% for (i = 0; i < personalInfo.getPostID().length; i++) { %>
-                    <li><a href="<jsp:getProperty name="personalInfo" property="postID[<%=i%>]"/>">
-                        <jsp:getProperty name="personalInfo" property="postTitle[<%=i%>]"/>
+                    <% int i;
+                        Post[] posts = personalInfo.getPosts();
+                        for (i = 0; i < posts.length; i++) { %>
+                    <li><a href="handleRead?postID=<%= posts[i].getID() %>">
+                        <%= posts[i].getTitle() %>
                     </a></li>
                     <% } %>
                 </ul>
-                <a href="#handleSearchPost.java?author=<jsp:getProperty name="personalInfo" property="account"/>">更多博文</a>
+                <a href="handleRead?postNum=<%= posts.length+5 %>">更多博文</a>
             </div>
         </div>
 
         <!--文章内容-->
         <div class="col-md-8" style="height:500px;background-color:#FFFFFF;border:3px solid #00FF00;">
-            <h3>
-                <jsp:getProperty name="read" property="title"/>
+            <h3><%= post.getTitle() %>
             </h3>
-            <p>
-                <jsp:getProperty name="read" property="content"/>
+            <p><%= post.getNumReads() + " " + post.getNumLikes() + " " + post.getNumComments()%>
+            </p>
+            <p><%= post.getContent() %>
             </p>
         </div>
 
         <!--一些按钮-->
         <div class="col-md-1" style="height:200px;background-color:#FFFFFF;border:3px solid #00FF00;">
-            <a class="btn" href="handleReading.java?type=点赞">点赞</a><br/>
-            <a class="btn" href="handleReading.java?type=收藏">收藏</a><br/>
-            <a class="btn" href="handleReading.java?type=评论">评论</a><br/>
-            <a class="btn" href="handleReading.java?type=上一篇">上一篇</a><br/>
-            <a class="btn" href="handleReading.java?type=下一篇">下一篇</a><br/>
+            <a class="btn" href="handleRead?type=like">点赞</a><br/>
+            <a class="btn" href="handleRead?type=collect">收藏</a><br/>
+            <a class="btn" href="handleRead?type=comment">评论</a><br/>
+            <a class="btn" href="handleRead?type=previous">上一篇</a><br/>
+            <a class="btn" href="handleRead?type=next">下一篇</a><br/>
         </div>
     </div>
 </div>

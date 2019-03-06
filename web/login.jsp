@@ -14,7 +14,7 @@
 <body>
 <div class="container col-md-5" style="margin:auto;margin-top:10%">
 
-    <form autocomplete="on" action="./servlet/handleLogin" method="POST">
+    <form autocomplete="on" action="handleLogin" method="POST">
         <h2 align="center">登录</h2>
 
         <label for="inputAccount" class="sr-only">账号</label>
@@ -32,7 +32,6 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
         <br/>
         <a href="register.jsp" style="margin-left:5px"><u>注册</u></a>
-        <a href="#" style="margin-left:50px"><u>退出登录</u></a>
     </form>
 </div>
 </body>

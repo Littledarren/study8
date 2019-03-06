@@ -21,16 +21,16 @@ public class HelpRegister extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         /*
-            TODO
             get parameters
             check validation:
-                1. check passwords
+                1. check format
                 2. check email not in database
+                2. check passwords
             if ok:
                 store in db
                 -> registerSuccess.jsp
             else:
-                request.setAttribute("success", "false");
+                store backNews in request
                 -> register.jsp
          */
         String email = req.getParameter("email");
@@ -41,6 +41,15 @@ public class HelpRegister extends HttpServlet {
         String university = req.getParameter("university");
         String major = req.getParameter("major");
 
+
+        //1. check email format
+        String pattern = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
+        boolean emailWellFormatted = email.matches(pattern);
+        if (!emailWellFormatted) {
+            req.setAttribute("backnews", "email is not in right format");
+            req.getRequestDispatcher("register.jsp").forward(req, resp);
+        }
+        //2. check email not exist
         DatabaseHelper dh = DatabaseHelper.getInstance();
         boolean emailNotExists = (boolean) dh.execSql(con -> {
             try {
@@ -54,33 +63,37 @@ public class HelpRegister extends HttpServlet {
                 return false;
             }
         });
-
+        if (!emailNotExists) {
+            req.setAttribute("backnews", "email already has been registered");
+            req.getRequestDispatcher("register.jsp").forward(req, resp);
+        }
+        //3. check passwords equal
         boolean passwordEquals = password.equals(confirmPassword);
-
-        if (emailNotExists && passwordEquals) {
-            boolean insertOK = (boolean) dh.execSql(con -> {
-                try {
-                    Statement sql = con.createStatement();
-                    sql.executeUpdate("insert into user " +
-                            "(uname, mail, password, college, profession, profile_photo, points) " +
-                            "VALUES (" + nickname + "," + email + "," + password + "," + university + "," + major + "," +
-                            "images/default.jpg" + "," + "0)");
-                    return true;
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    return true;
-                }
-            });
-            if (insertOK) {
-                req.getRequestDispatcher("login.jsp").forward(req, resp);
-                return;
-            }
+        if (!passwordEquals) {
+            req.setAttribute("backnews", "passwords are not equal");
+            req.getRequestDispatcher("register.jsp").forward(req, resp);
         }
 
-        //error occurred
-        req.setAttribute("success", false);
-        req.getRequestDispatcher("register.jsp").forward(req, resp);
-
+        boolean insertOK = (boolean) dh.execSql(con -> {
+            try {
+                Statement sql = con.createStatement();
+                sql.executeUpdate("insert into user " +
+                        "(uname, mail, password, college, profession, profile_photo, points, sex) " +
+                        "VALUES (" + nickname + "," + email + "," + password + "," + university + "," + major + "," +
+                        "images/default.jpg" + "," + "0" + sex + ")");
+                return true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return true;
+            }
+        });
+        if (insertOK) {
+            req.getRequestDispatcher("login.jsp").forward(req, resp);
+            return;
+        } else {
+            req.setAttribute("backnews", "inserting into database failed");
+            req.getRequestDispatcher("register.jsp").forward(req, resp);
+        }
 
     }
 }

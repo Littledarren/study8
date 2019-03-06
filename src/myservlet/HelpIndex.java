@@ -35,7 +35,7 @@ public class HelpIndex extends HttpServlet {
         CommonHelper.loginHelp(req);
 
         Index index = new Index();
-        index.setMessageName(new String[]{"aaa", "bbb", "ccc"});
+        index.setMessages(new String[]{"aaa", "bbb", "ccc"});
         req.setAttribute("index", index);
 
         req.getRequestDispatcher("/index.jsp").forward(req, resp);

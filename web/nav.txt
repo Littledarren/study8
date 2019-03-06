@@ -3,45 +3,51 @@
 <jsp:useBean id="login" type="mybean.data.Login" scope="session" />
 
 <nav class="navbar navbar-default" role="navigation">
-	<div class="container-fluid">		
-		<div>
-			<ul class="nav navbar-nav">
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="margin-left:50px">
-						博客分类
-						<b class="caret"></b>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a href="#handleSearchPost.java?type=推荐">推荐</a></li>
-						<li><a href="#handleSearchPost.java?type=关注">关注</a></li>
-						<li><a href="#handleSearchPost.java?type=论坛">论坛</a></li>
-						<li><a href="#handleSearchPost.java?type=知识理论">知识理论</a></li>
-						<li><a href="#handleSearchPost.java?type=经验分享">经验分享</a></li>
-						<li><a href="#handleSearchPost.java?type=资源分享">资源分享</a></li>
-						<li><a href="#handleSearchPost.java?type=考研">考研</a></li>
-						<li><a href="#handleSearchPost.java?type=就业">就业</a></li>
-						<li><a href="#handleSearchPost.java?type=其他">其他</a></li>
-					</ul>
-				</li>
-				<li><a href="handleMine">我的</a></li>
-				<li><a href="write.jsp">写博客</a></li>
-				
-				<li><form class="form-inline" role="form" style="margin-top:1%;margin-left:550px" action="/handleIndex" method="POST">
-					<div class="form-group">
-						<label class="sr-only" for="name">搜索</label>
-						<input type="text" class="form-control" id="title" placeholder="搜索wenzhangming" style="display:inline-block">
-					</div>
-					<button type="submit" class="btn btn-default" style="display:inline-block">OK</button>
-				</form></li>
-				<% if(login.isLogined()==false){ %>
-					<li><a href="login.jsp" style="margin-left:50px">登陆/注册</a></li>
-				<% }else { %>
-					<li><jsp:getProperty name="login" property="nickname"/>
-						<a href="#"> 退出</a>
-					</li>
-				<% } %>
+	<div class="container-fluid"><div>
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="margin-left:50px">
+                    博客分类
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="handleIndex?type=recommend">推荐</a></li>
+                    <li><a href="handleIndex?type=focus">关注</a></li>
+                    <li><a href="handleIndex?type=forum">论坛</a></li>
+                    <li><a href="handleIndex?type=knowledge">知识理论</a></li>
+                    <li><a href="handleIndex?type=experience">经验分享</a></li>
+                    <li><a href="handleIndex?type=resource">资源分享</a></li>
+                    <li><a href="handleIndex?type=postgraduate">考研</a></li>
+                    <li><a href="handleIndex?type=work">就业</a></li>
+                    <li><a href="handleIndex?type=others">其他</a></li>
+                </ul>
+            </li>
 
-			</ul>
-		</div>
-	</div>
+            <% if(login.isLogined()){ %>
+                <li><a href="handleMine">我的</a></li>
+                <li><a href="handleWrite">写博客</a></li>
+            <% }else{ %>
+                <li><a href="login.jsp">我的</a></li>
+                <li><a href="login.jsp">写博客</a></li>
+            <% } %>
+
+            <li>
+                <form class="form-inline" role="form" style="margin-top:1%;margin-left:550px" action="/handleIndex" method="POST">
+                    <div class="form-group">
+                        <label class="sr-only" for="name">搜索</label>
+                        <input type="text" class="form-control" id="title" placeholder="搜索博文名" style="display:inline-block">
+                    </div>
+                    <button type="submit" class="btn btn-default" style="display:inline-block">OK</button>
+                </form>
+            </li>
+            <% if(login.isLogined()==false){ %>
+                <li><a href="login.jsp" style="margin-left:50px">登陆</a></li>
+            <% }else { %>
+                <li>
+                    <%=login.getNickname()+" "%>
+                    <a href="handleLogin"> 退出</a>
+                </li>
+            <% } %>
+        </ul>
+    </div></div>
 </nav>

@@ -5,8 +5,14 @@ public class Group {
     String groupName, groupID; //group名字与ID
     String myName; //我在本group中的备注名
     String[] noticeIDs, noticeTitles; //公告ID与题目
+    Post[] posts = new Post[3];
+
+    {
+        posts[0] = new Post();
+        posts[1] = new Post();
+        posts[2] = new Post();
+    }
     String[] members;  //group成员
-    String[] postID, postTitle, postAuthors; //博文ID,题目，作者
     boolean isAdmin = false; //是否为管理员
 
     public String getGroupName() {
@@ -57,28 +63,12 @@ public class Group {
         this.members = members;
     }
 
-    public String[] getPostID() {
-        return postID;
+    public Post[] getPosts() {
+        return posts;
     }
 
-    public void setPostID(String[] postID) {
-        this.postID = postID;
-    }
-
-    public String[] getPostTitle() {
-        return postTitle;
-    }
-
-    public void setPostTitle(String[] postTitle) {
-        this.postTitle = postTitle;
-    }
-
-    public String[] getPostAuthors() {
-        return postAuthors;
-    }
-
-    public void setPostAuthors(String[] postAuthors) {
-        this.postAuthors = postAuthors;
+    public void setPosts(Post[] posts) {
+        this.posts = posts;
     }
 
     public boolean isAdmin() {

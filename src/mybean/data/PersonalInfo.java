@@ -3,8 +3,26 @@
 package mybean.data;
 
 public class PersonalInfo {
-    private String email;
-    private String password;
+    private String email = "test";
+    private String password = "test";
+    private String nickname = "test";
+    private String sex = "test";
+    private String university = "test";
+    private String major = "test";
+    private int score = 0;
+    private int rank = 0;
+
+    int numArticles = 0, numFans = 0, numLikes = 0, numComments = 0, numReads = 0;
+    Post[] posts = new Post[3]; //个人发布的博文的ID与题目
+
+    {
+        posts[0] = new Post();
+        posts[1] = new Post();
+        posts[2] = new Post();
+    }
+    String[] groupIDs, groupNames;//所在的groups的名字与ID
+    String[] classes; //个人分类
+    String backNews;
 
     public Post[] getPosts() {
         return posts;
@@ -13,20 +31,6 @@ public class PersonalInfo {
     public void setPosts(Post[] posts) {
         this.posts = posts;
     }
-
-    private String nickname;
-    private String sex;
-    private String university;
-    private String major;
-    private int score;
-    private int rank;
-
-    int numArticles = 0, numFans = 0, numLikes = 0, numComments = 0, numReads = 0;
-    Post[] posts; //个人发布的博文的ID与题目
-
-    String[] groupIDs, groupNames;//所在的groups的名字与ID
-    String[] classes; //个人分类
-    String backNews;
 
     public String getEmail() {
         return email;

@@ -37,15 +37,17 @@
         <label class="sr-only">专业</label>
         <input type="text" class="form-control" placeholder="专业" name="major" required/><br/>
 
+        <%
+            try {
+                String backnews = (String) request.getAttribute("backnews");
+                out.println("<p style=\"color:#FF0000\">" + backnews + "</p>");
+            } catch (Exception e) {
+            }
+        %>
+
         <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
     </form>
-    <%
-        try {
-            boolean success = (boolean) request.getAttribute("success");
-        } catch (Exception e) {
-//            e.printStackTrace();
-        }
-    %>
+
 </div>
 </body>
 </html>

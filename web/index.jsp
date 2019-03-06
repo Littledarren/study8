@@ -23,21 +23,15 @@
 
             <!--消息-->
             <h3>消息</h3>
-
-            <!--最新消息-->
             <ul>
-                <%
-                    int i;
-                    for (i = 0; i < index.getMessageID().length; i++) { %>
-                <li>
-                    <a href="handleRead.java?messageID=<%= index.getMessageID()[i]%>>">
-                        <%= index.getMessageName()[i]%>
-                    </a>
+                <% int i;
+                    for (i = 0; i < index.getMessages().length; i++) { %>
+                <li><%= index.getMessages()[i]%>
                 </li>
                 <% } %>
             </ul>
             <!--更多消息(每点击一次就多展示N条消息）-->
-            <a href="\handleIndex">更多消息</a>
+            <a href="handleIndex?msgNum=<%=index.getMessages().length+5%>">更多消息</a>
         </div>
 
 
@@ -49,14 +43,15 @@
                     Post[] posts = index.getPosts();
                     for (i = 0; i < posts.length; i++) { %>
                 <li>
-                    <a href="handleRead.java?postID=<%= posts[i].getID()%>>">
+                    <a href="read.jsp">
                         <%= posts[i].getTitle()%>
                     </a>
+                    <%= posts[i].getAuthor() + " " + posts[i].getNumReads()%>
                 </li>
                 <% } %>
             </ul>
             <!--更多博文(每点击一次就多展示N条博文）-->
-            <a href="\handleIndex?type=<%= index.getPostType() %>&num=10">更多博文</a>
+            <a href="handleIndex?postNum=<%= posts.length+10 %>&postType=<%= index.getPostType() %>">更多博文</a>
         </div>
     </div>
 </div>
