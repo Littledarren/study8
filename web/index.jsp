@@ -37,7 +37,7 @@
                 <% } %>
             </ul>
             <!--更多消息(每点击一次就多展示N条消息）-->
-            <a href="handleSearchMsg.java">更多消息</a>
+            <a href="\handleIndex">更多消息</a>
         </div>
 
 
@@ -56,7 +56,7 @@
                 <% } %>
             </ul>
             <!--更多博文(每点击一次就多展示N条博文）-->
-            <a href="handleSearchPost.java?type=<%= index.getPostType() %>">更多博文</a>
+            <a href="\handleIndex?type=<%= index.getPostType() %>&num=10">更多博文</a>
         </div>
     </div>
 </div>

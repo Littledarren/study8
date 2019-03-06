@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<jsp:useBean id="login" class="mybean.data.Login" scope="request"/>
+<jsp:useBean id="login" type="mybean.data.Login" scope="session"/>
 <!doctype html>
 <html>
 <head>
@@ -14,7 +14,7 @@
 <body>
 <div class="container col-md-5" style="margin:auto;margin-top:10%">
 
-    <form autocomplete="on" action="./servlet/handleLogin.java" method="POST">
+    <form autocomplete="on" action="./servlet/handleLogin" method="POST">
         <h2 align="center">登录</h2>
 
         <label for="inputAccount" class="sr-only">账号</label>

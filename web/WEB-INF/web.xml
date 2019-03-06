@@ -5,7 +5,7 @@
          version="4.0">
 
     <welcome-file-list>
-        <welcome-file>index</welcome-file>
+        <welcome-file>handleIndex</welcome-file>
     </welcome-file-list>
 
 
@@ -15,7 +15,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>helpIndex</servlet-name>
-        <url-pattern>/index</url-pattern>
+        <url-pattern>/handleIndex</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -24,7 +24,44 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>helpRegister</servlet-name>
-        <url-pattern>/handlerRegister</url-pattern>
+        <url-pattern>/handleRegister</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>helpLogin</servlet-name>
+        <servlet-class>myservlet.HelpLogin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>helpLogin</servlet-name>
+        <url-pattern>/handleLogin</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>helpMine</servlet-name>
+        <servlet-class>myservlet.HelpMine</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>helpMine</servlet-name>
+        <url-pattern>/handleMine</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>helpRead</servlet-name>
+        <servlet-class>myservlet.HelpRead</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>helpRead</servlet-name>
+        <url-pattern>/handleRead</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>helpWrite</servlet-name>
+        <servlet-class>myservlet.HelpWrite</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>helpWrite</servlet-name>
+        <url-pattern>/handleWrite</url-pattern>
     </servlet-mapping>
 
 

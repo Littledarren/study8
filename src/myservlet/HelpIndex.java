@@ -18,6 +18,17 @@ public class HelpIndex extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         /* TODO
 
+            judge parameter type
+1
+            judge isLogined
+            if notLogined
+                query posts
+            if Logined
+                query msg
+                query posts with certain type
+                    title author read_count
+                    order by read_count
+             -> index.jsp
 
          */
 

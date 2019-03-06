@@ -39,7 +39,13 @@
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
     </form>
-    <% boolean success = (boolean) request.getAttribute("success"); %>
+    <%
+        try {
+            boolean success = (boolean) request.getAttribute("success");
+        } catch (Exception e) {
+//            e.printStackTrace();
+        }
+    %>
 </div>
 </body>
 </html>

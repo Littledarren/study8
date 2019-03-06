@@ -21,7 +21,7 @@ public class DatabaseHelper {
 
 
     private Connection dbc = null;
-    private DatabaseHelper dbh = null;
+    private static DatabaseHelper ourInstance = new DatabaseHelper();
 
     /**
      *
@@ -66,12 +66,12 @@ public class DatabaseHelper {
         }
     }
 
-    public DatabaseHelper getDbh() {
-        if (dbh == null) {
-            dbh = new DatabaseHelper();
-        }
-        return dbh;
+    public static DatabaseHelper getInstance() {
+        return ourInstance;
     }
 
+    public synchronized Object execSql(SqlExectable se) {
+        return se.exec(dbc);
+    }
 
 }

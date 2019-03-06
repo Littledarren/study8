@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<jsp:useBean id="personalInfo" class="mybean.data.PersonalInfo" scope="request"/>
+<jsp:useBean id="personalInfo" type="mybean.data.PersonalInfo" scope="request"/>
 <%! int i; %>
 <!doctype html>
 <html>

@@ -36,7 +36,7 @@
                 <div>
                     <label for="inputPassword" class="sr-only">上传文件</label>
                     上传文件:<input type="file" style="width:100px;display:inline-block" class="form-control"
-                                placeholder="上传文件" name="title" required/></div>
+                                placeholder="上传文件" name="file" required/></div>
                 <label for="inputPassword" class="sr-only">正文</label>
                 <textarea class="form-control" placeholder="正文" name="content" rows="18"></textarea>
             </div>

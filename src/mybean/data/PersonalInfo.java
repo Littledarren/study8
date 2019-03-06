@@ -3,11 +3,27 @@
 package mybean.data;
 
 public class PersonalInfo {
-    String email = "", password = "", nickname = "",
-            sex = "", university = "", major = "";
-    int score = 0, rank = 0;  //积分与排名
+    private String email;
+    private String password;
+
+    public Post[] getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Post[] posts) {
+        this.posts = posts;
+    }
+
+    private String nickname;
+    private String sex;
+    private String university;
+    private String major;
+    private int score;
+    private int rank;
+
     int numArticles = 0, numFans = 0, numLikes = 0, numComments = 0, numReads = 0;
-    String[] postID, postTitle; //个人发布的博文的ID与题目
+    Post[] posts; //个人发布的博文的ID与题目
+
     String[] groupIDs, groupNames;//所在的groups的名字与ID
     String[] classes; //个人分类
     String backNews;
@@ -114,22 +130,6 @@ public class PersonalInfo {
 
     public void setNumReads(int numReads) {
         this.numReads = numReads;
-    }
-
-    public String[] getPostID() {
-        return postID;
-    }
-
-    public void setPostID(String[] postID) {
-        this.postID = postID;
-    }
-
-    public String[] getPostTitle() {
-        return postTitle;
-    }
-
-    public void setPostTitle(String[] postTitle) {
-        this.postTitle = postTitle;
     }
 
     public String[] getGroupIDs() {

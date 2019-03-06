@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <jsp:useBean id="personalInfo" class="mybean.data.PersonalInfo" scope="request"/>
-<jsp:useBean id="read" class="mybean.data.Read" scope="request"/>
-<%! int i; %>
+<jsp:useBean id="post" type="mybean.data.Post" scope="request"/>
 <!doctype html>
 <html>
 <head>
@@ -12,7 +11,7 @@
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <%--<%@ include file="nav.txt" %>--%>
+    <%@ include file="nav.txt" %>
 <body style="background-color:#00FF00">
 <div class="container">
     <div class="row">
@@ -95,11 +94,11 @@
 
         <!--一些按钮-->
         <div class="col-md-1" style="height:200px;background-color:#FFFFFF;border:3px solid #00FF00;">
-            <a class="btn" href="handleReading.java?type=点赞">点赞<a><br/>
-                <a class="btn" href="handleReading.java?type=收藏">收藏<a><br/>
-                    <a class="btn" href="handleReading.java?type=评论">评论<a><br/>
-                        <a class="btn" href="handleReading.java?type=上一篇">上一篇<a><br/>
-                            <a class="btn" href="handleReading.java?type=下一篇">下一篇<a><br/>
+            <a class="btn" href="handleReading.java?type=点赞">点赞</a><br/>
+            <a class="btn" href="handleReading.java?type=收藏">收藏</a><br/>
+            <a class="btn" href="handleReading.java?type=评论">评论</a><br/>
+            <a class="btn" href="handleReading.java?type=上一篇">上一篇</a><br/>
+            <a class="btn" href="handleReading.java?type=下一篇">下一篇</a><br/>
         </div>
     </div>
 </div>
