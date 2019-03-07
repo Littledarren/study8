@@ -33,7 +33,7 @@
             <jsp:getProperty name="personalInfo" property="major"/>
         </li>
     </ul>
-    <a href="/index">进入首页</a>
+    <a href="/handleIndex">进入首页</a>
 </div>
 </body>
 </html>	

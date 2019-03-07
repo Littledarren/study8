@@ -21,10 +21,10 @@
             <div style="height:150px;background-color:#FFFFFF;border-bottom:2px solid #00FF00;">
                 <h3>个人分类</h3>
                 <ul>
-                    <% for (i = 0; i < personalInfo.getClasses().length(); i++) { %>
+                    <% for (i = 0; i < personalInfo.getClasses().length; i++) { %>
                     <li>
-                        <a href="handleClasses.java?<jsp:getProperty name="personalInfo" property="classes[<%=i%>]"/>">
-                            <jsp:getProperty name="personalInfo" property="classes[<%=i%>]"/>
+                        <a href="handleMine?class=<%= personalInfo.getClasses()[i] %>">
+                            <%= personalInfo.getClasses()[i] %>
                         </a>
                     </li>
                     <% } %>
@@ -35,8 +35,8 @@
             <div style="height:200px;background-color:#FFFFFF">
                 <h3>Group</h3>
                 <ul>
-                    <li><a href="#handleGroup.java?value=create">创建group</a></li>
-                    <li><a href="#handleGroup.java?value=join">加入group</a></li>
+                    <li><a href="handleMine?value=create">创建group</a></li>
+                    <li><a href="handleMine?value=join">加入group</a></li>
                     <!--所在的groups-->
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -44,10 +44,10 @@
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <% for (i = 0; i < personalInfo.getGroupNames().length(); i++) { %>
+                            <% for (i = 0; i < personalInfo.getGroupNames().length; i++) { %>
                             <li>
-                                <a href="#handleGroup.java?<jsp:getProperty name="personalInfo" property="groupID[<%=i%>]"/>">
-                                    <jsp:getProperty name="personalInfo" property="groupNames[<%=i%>]"/>
+                                <a href="handleGroup?groupID=<%= personalInfo.getGroupIDs()[i] %>">
+                                    <%= personalInfo.getGroupNames()[i] %>
                                 </a>
                             </li>
                             <% } %>

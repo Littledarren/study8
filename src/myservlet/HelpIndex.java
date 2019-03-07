@@ -32,7 +32,7 @@ public class HelpIndex extends HttpServlet {
 
          */
 
-        CommonHelper.loginHelp(req);
+        CommonHelper.getLoginBean(req);
 
         Index index = new Index();
         index.setMessages(new String[]{"aaa", "bbb", "ccc"});

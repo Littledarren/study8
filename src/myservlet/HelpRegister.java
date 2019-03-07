@@ -1,5 +1,6 @@
 package myservlet;
 
+import myutil.CommonHelper;
 import myutil.DatabaseHelper;
 
 import javax.servlet.ServletException;
@@ -7,9 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class HelpRegister extends HttpServlet {
 
@@ -33,29 +34,30 @@ public class HelpRegister extends HttpServlet {
                 store backNews in request
                 -> register.jsp
          */
-        String email = req.getParameter("email");
-        String password = req.getParameter("password");
-        String confirmPassword = req.getParameter("confirmPassword");
-        String nickname = req.getParameter("nickname");
-        String sex = req.getParameter("sex");
-        String university = req.getParameter("university");
-        String major = req.getParameter("major");
+        final String email = req.getParameter("email");
+        final String password = req.getParameter("password");
+        final String confirmPassword = req.getParameter("confirmPassword");
+        final String nickname = req.getParameter("nickname");
+        final String sex = req.getParameter("sex");
+        final String university = req.getParameter("university");
+        final String major = req.getParameter("major");
 
 
         //1. check email format
-        String pattern = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
-        boolean emailWellFormatted = email.matches(pattern);
+        boolean emailWellFormatted = CommonHelper.checkEmailFormat(email);
         if (!emailWellFormatted) {
             req.setAttribute("backnews", "email is not in right format");
             req.getRequestDispatcher("register.jsp").forward(req, resp);
         }
+
         //2. check email not exist
-        DatabaseHelper dh = DatabaseHelper.getInstance();
+        DatabaseHelper dh = DatabaseHelper.getInstance(getServletContext());
         boolean emailNotExists = (boolean) dh.execSql(con -> {
             try {
-                Statement sql = con.createStatement();
-                ResultSet rs = sql.executeQuery("SELECT mail from user where mail=" + email);
+                PreparedStatement ps = con.prepareStatement("select * from user where mail=?");
+                ps.setString(1, email);
 
+                ResultSet rs = ps.executeQuery();
                 return rs.getRow() == 0;
 
             } catch (SQLException e) {
@@ -76,15 +78,22 @@ public class HelpRegister extends HttpServlet {
 
         boolean insertOK = (boolean) dh.execSql(con -> {
             try {
-                Statement sql = con.createStatement();
-                sql.executeUpdate("insert into user " +
-                        "(uname, mail, password, college, profession, profile_photo, points, sex) " +
-                        "VALUES (" + nickname + "," + email + "," + password + "," + university + "," + major + "," +
-                        "images/default.jpg" + "," + "0" + sex + ")");
+                PreparedStatement ps = con.prepareStatement("insert into user (uname, mail, password, college, profession,profile_photo, points, sex)values (?, ?, ?, ?, ?, ?, ?, ?)");
+                ps.setString(1, nickname);
+                ps.setString(2, email);
+                ps.setString(3, password);
+                ps.setString(4, university);
+                ps.setString(5, major);
+                ps.setString(6, "images/default.jpg");
+                ps.setLong(7, 0);
+                ps.setString(8, sex);
+
+                ps.executeUpdate();
+
                 return true;
             } catch (SQLException e) {
                 e.printStackTrace();
-                return true;
+                return false;
             }
         });
         if (insertOK) {

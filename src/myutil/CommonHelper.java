@@ -7,8 +7,8 @@ import javax.servlet.http.HttpSession;
 
 public class CommonHelper {
 
-    //load loginBean
-    public static void loginHelp(HttpServletRequest req) {
+    //get loginBean
+    public static Login getLoginBean(HttpServletRequest req) {
         Login loginBean = null;
         HttpSession session = req.getSession(true);
         try {
@@ -22,5 +22,12 @@ public class CommonHelper {
             loginBean = new Login();
             session.setAttribute("login", loginBean);
         }
+        return loginBean;
+    }
+
+    //check email format
+    public static boolean checkEmailFormat(String email) {
+        String pattern = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
+        return email.matches(pattern);
     }
 }

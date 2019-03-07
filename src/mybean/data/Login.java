@@ -1,17 +1,27 @@
 package mybean.data;
 
 public class Login {
-    String account, password, nickname;
-    String backNews; //反馈给用户的信息
-    boolean success = true; //是否登陆成功
-    boolean logined = false; //是否已登陆
+    private long uid;
 
+    private String account, password, nickname;
+
+    private String backNews; //反馈给用户的信息
+    private boolean success = true; //是否登陆成功
+    private boolean logined = false; //是否已登陆
     public String getAccount() {
         return account;
     }
 
     public void setAccount(String account) {
         this.account = account;
+    }
+
+    public long getUid() {
+        return uid;
+    }
+
+    public void setUid(long uid) {
+        this.uid = uid;
     }
 
     public String getPassword() {

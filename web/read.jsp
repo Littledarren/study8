@@ -85,23 +85,70 @@
             </div>
         </div>
 
-        <!--文章内容-->
+
         <div class="col-md-8" style="height:500px;background-color:#FFFFFF;border:3px solid #00FF00;">
-            <h3><%= post.getTitle() %>
-            </h3>
-            <p><%= post.getNumReads() + " " + post.getNumLikes() + " " + post.getNumComments()%>
-            </p>
-            <p><%= post.getContent() %>
-            </p>
+            <!--文章内容-->
+            <div>
+                <h3><%= post.getTitle() %>
+                </h3>
+                <p><%= post.getNumReads() + " " + post.getNumLikes() + " " + post.getNumComments()%>
+                </p>
+                <p><%= post.getContent() %>
+                </p>
+            </div>
+            <!--Write comments-->
+            <div>
+                <form role="form" action="handleRead" method="POST">
+                    <div class="form-group">
+                        <label class="sr-only" for="name">comment</label>
+                        <input type="text" class="form-control" id="title" placeholder="发表评论">
+                    </div>
+                    <button type="submit" class="btn btn-default">发表</button>
+                </form>
+            </div>
+            <!--Read comments-->
+            <div>
+                Comment[] comments = post.getComments();
+                <% for (i = 0; i < comments.length; i++) { %>
+                <p><%= comments[i].getAuthor() %>
+                </p>
+                <% if (comments[i].authorRepliedTo != null) { %>
+                <p>回复<%= comments[i].getAuthorRepliedTo() + ": " + comments[i].getContentRepliedTo() %>
+                </p>
+                <% } %>
+                <p>comments[i].getContent()</p>
+                <script>
+                    function inputReply() {
+                        x = document.getElementById("reply");  // 找到元素
+                        x.innerHTML = "<form id=\"cancel\" role=\"form\" action=\"handleRead\" method=\"POST\">\n" +
+                            "                    <div class=\"form-group\">\n" +
+                            "                        <label class=\"sr-only\" for=\"name\">reply</label>\n" +
+                            "                        <input type=\"text\" class=\"form-control\" name=\"replyContent\" placeholder=\"回复\"/>\n" +
+                            "                    </div>\n" +
+                            "        <input type=\"hidden\" class=\"form-control\" name=\"replyTo\" value=\"<%= comments[i].getID() %>\"/>" +
+                            "                    <button type=\"submit\" class=\"btn btn-default\ onclick=\"cancel\" >发表</button>\n" +
+                            "            <button class=\"btn btn-default\" onclick=\"cancel\">取消</button>\n" +
+                            "                </form>";    // 改变内容
+                    }
+
+                    function cancel() {
+                        x = document.getElementById("cancel");  // 找到元素
+                        x.innerHTML = "<button id=\"reply\" type=\"button\" onclick=\"inputReply()\">回复</button>";
+                    }
+                </script>
+                <button id="reply" type="button" onclick="inputReply()">回复</button>
+                <% } %>
+            </div>
         </div>
+
 
         <!--一些按钮-->
         <div class="col-md-1" style="height:200px;background-color:#FFFFFF;border:3px solid #00FF00;">
-            <a class="btn" href="handleRead?type=like">点赞</a><br/>
-            <a class="btn" href="handleRead?type=collect">收藏</a><br/>
-            <a class="btn" href="handleRead?type=comment">评论</a><br/>
-            <a class="btn" href="handleRead?type=previous">上一篇</a><br/>
-            <a class="btn" href="handleRead?type=next">下一篇</a><br/>
+            <a class="btn" href="handleRead?postID=<%= posts[i].getID() %>&type=like">点赞</a><br/>
+            <a class="btn" href="handleRead?postID=<%= posts[i].getID() %>&type=collect">收藏</a><br/>
+            <a class="btn" href="handleRead?postID=<%= posts[i].getID() %>&type=comment">评论</a><br/>
+            <a class="btn" href="handleRead?postID=<%= posts[i].getID() %>&type=previous">上一篇</a><br/>
+            <a class="btn" href="handleRead?postID=<%= posts[i].getID() %>&type=next">下一篇</a><br/>
         </div>
     </div>
 </div>

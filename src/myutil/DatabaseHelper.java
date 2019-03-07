@@ -2,6 +2,7 @@ package myutil;
 
 import com.alibaba.fastjson.JSONObject;
 
+import javax.servlet.ServletContext;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -12,7 +13,7 @@ import java.sql.SQLException;
 
 
 public class DatabaseHelper {
-    private static final String conf = "WEB-INF/DBconf.json";
+    private static final String DBCONF_JSON = "WEB-INF/classes/conf/DBconf.json";
 
     private static String className;
     private static String url;
@@ -21,13 +22,16 @@ public class DatabaseHelper {
 
 
     private Connection dbc = null;
-    private static DatabaseHelper ourInstance = new DatabaseHelper();
+    private static DatabaseHelper ourInstance = null;
 
     /**
      *
      */
-    private void parseConfFile() {
-        try (BufferedReader br = new BufferedReader(new FileReader(conf))) {
+    private void parseConfFile(ServletContext application) {
+
+        String realPath = application.getRealPath("/");
+
+        try (BufferedReader br = new BufferedReader(new FileReader(realPath + DBCONF_JSON))) {
             String temp;
             StringBuilder sb = new StringBuilder();
             while ((temp = br.readLine()) != null) {
@@ -45,28 +49,29 @@ public class DatabaseHelper {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            System.out.println("JSON string can not be parsed");
         }
     }
 
-    private DatabaseHelper() {
-        //read conf
-        parseConfFile();
+    private DatabaseHelper(ServletContext application) {
+        //read DBCONF_JSON
+        parseConfFile(application);
 
         //connect with database
         try {
             Class.forName(className);
             dbc = DriverManager.getConnection(url, username, password);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("can not load database driver");
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
+        System.out.println("connected to database");
     }
 
-    public static DatabaseHelper getInstance() {
+    public static DatabaseHelper getInstance(ServletContext application) {
+        if (ourInstance == null) {
+            ourInstance = new DatabaseHelper(application);
+        }
         return ourInstance;
     }
 

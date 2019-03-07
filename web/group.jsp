@@ -7,7 +7,7 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <jsp:useBean id="group" class="mybean.data.Group" scope="request"/>
-<%! int i; %>
+
 <!doctype html>
 <html>
 <head>
@@ -19,6 +19,39 @@
     <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <%@ include file="nav.txt" %>
+    <script>
+        function input(String
+
+        _type;
+        )
+        {
+            if (_type === "名片")
+                x = document.getElementById("input1");  // 找到元素
+            if (_type === "公告")
+                x = document.getElementById("input2");
+            x.innerHTML = "<form id=\"cancel\" role=\"form\" action=\"handleGroup\" method=\"POST\">\n" +
+                "             <div class=\"form-group\">\n" +
+                "                  <label class=\"sr-only\" for=\"content\">content</label>\n" +
+                "                  <input type=\"text\" class=\"form-control\" id=\"content\" name=\"content\" placeholder=" + _type + "/>\n" +
+                "             </div>\n" +
+                "             <input type=\"hidden\" class=\"form-control\" name=\"groupID_type\" value=\"<%= group.getGroupID()+" "+_type %>\"/>" +
+                "             <button type=\"submit\" class=\"btn btn-default\ onclick=\"cancel\" >OK</button>\n" +
+                "             <button class=\"btn btn-default\" onclick=\"cancel\">取消</button>\n" +
+                "        </form>";    // 改变内容
+        }
+
+        function cancel(String
+
+        _type;
+        )
+        {
+            x = document.getElementById("cancel");  // 找到元素
+            if (_type === "公告")
+                x.innerHTML = "<a id=\"input\" class=\"btn\" onclick=\"input()\">发公告</a>";
+            else if (type === "名片")
+                x.innerHTML = "<a id=\"input\" class=\"btn\" onclick=\"input()\">修改名片</a>";
+        }
+    </script>
 </head>
 <body style="background-color:#00FF00">
 <div class="container">
@@ -38,47 +71,48 @@
             <!--公告栏-->
             <div style="height:150px;background-color:#FFFFFF;border-bottom:2px solid #00FF00;">
                 <h3>公告栏</h3>
-                <ul>
-                    <% for (i = 0; i < group.getNoticeIDs().length(); i++) { %>
-                    <li>
-                        <a href="handleGroup.java?<jsp:getProperty name="group" property="noticeIDs[<%=i%>]"/>">
-                            <jsp:getProperty name="group" property="noticeNames[<%=i%>]"/>
-                        </a>
-                    </li>
-                    <% } %>
-                </ul>
+                <p><%= group.getNoticeContent() %>
+                </p>
             </div>
 
             <!--一些功能-->
             <div style="height:200px;background-color:#FFFFFF">
                 <h3></h3>
                 <ul>
-                    <li><a href="#">修改名片</a></li>
+                    <li><a id="input1" class="btn" onclick="input(<%= "名片" %>)">修改名片</a></li>
                     <br/>
                     <li>
-                        <a href="#handleGroup.java?groupID=<jsp:getProperty name="group" property="groupID"/>">查看Group成员</a>
+                        <a href="handleGroup?type=members&groupID=<%= group.getGroupID()%>">查看Group成员</a>
                     </li>
                     <br/>
                     <!--管理员才有的功能-->
-                    <% if (group.getIsAdmin() == true) { %>
-                    <li><a href="#">发公告</a></li>
+                        <% if (group.isAdmin() == true) { %>
+                    <li><a id="input2" class="btn" onclick="input(<%= "公告" %>)">发公告</a></li>
                     <br/>
-                    <li><a href="#">踢人</a></li>
-                    <br/>
+                    <li>
+                        <form role="form" action="handleGroup" method="POST">
+                            <input type="text" class="form-control" name="memberID" placeholder="输入成员ID"/>
+                            <button type="submit" class="btn btn-default>踢人</button>
+                        </form>
+                    </li>
                     <% } %>
-                    <li><a href="#handleGroup.java">退出group</a></li>
+                    <li><a href=" handleGroup?groupID=<%= group.getGroupID() %>">退出group</a></li>
                 </ul>
             </div>
         </div>
 
         <!--该group的最新博文-->
-        <div class="col-md-9" style="height:550px;background-color:#FFFFFF;border:3px solid #00FF00;">
+        <div class=" col-md-9" style="height:550px;background-color:#FFFFFF;border:3px solid #00FF00;">
             <h3>最新博文</h3>
             <ul>
-                <% for (i = 0; i < group.getPostID().length; i++) { %>
-                <li><a href="#handleRead.java?postID=<jsp:getProperty name="group" property="postID[<%=i%>]"/>">
-                    <jsp:getProperty name="group" property="postTitle[<%=i%>]"/>
-                </a></li>
+                <% int i;
+                    for (i = 0; i < group.getPosts().length; i++) { %>
+                <li>
+                    <a href="handleGroup?postID=<%= group.getPosts()[i].getID() %>">
+                        <%= group.getPosts()[i].getTitle() %>
+                    </a>
+                    <%= group.getPosts()[i].getAuthor() + " " + group.getPosts()[i].getNumReads()%>
+                </li>
                 <% } %>
             </ul>
         </div>

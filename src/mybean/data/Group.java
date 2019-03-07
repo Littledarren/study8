@@ -2,17 +2,18 @@
 package mybean.data;
 
 public class Group {
-    String groupName, groupID; //group名字与ID
-    String myName; //我在本group中的备注名
-    String[] noticeIDs, noticeTitles; //公告ID与题目
-    Post[] posts = new Post[3];
+    private String groupName, groupID; //group名字与ID
+    private String myName; //我在本group中的备注名
+    private String noticeContent; //公告ID与题目
+    private Post[] posts = new Post[3];
 
     {
         posts[0] = new Post();
         posts[1] = new Post();
         posts[2] = new Post();
     }
-    String[] members;  //group成员
+
+    String[] memberIDs, memberNames;  //group成员
     boolean isAdmin = false; //是否为管理员
 
     public String getGroupName() {
@@ -39,28 +40,28 @@ public class Group {
         this.myName = myName;
     }
 
-    public String[] getNoticeIDs() {
-        return noticeIDs;
+    public String getNoticeContent() {
+        return noticeContent;
     }
 
-    public void setNoticeIDs(String[] noticeIDs) {
-        this.noticeIDs = noticeIDs;
+    public void setNoticeContent(String noticeContent) {
+        this.noticeContent = noticeContent;
     }
 
-    public String[] getNoticeTitles() {
-        return noticeTitles;
+    public String[] getMemberIDs() {
+        return memberIDs;
     }
 
-    public void setNoticeTitles(String[] noticeTitles) {
-        this.noticeTitles = noticeTitles;
+    public void setMemberIDs(String[] memberIDs) {
+        this.memberIDs = memberIDs;
     }
 
-    public String[] getMembers() {
-        return members;
+    public String[] getMemberNames() {
+        return memberNames;
     }
 
-    public void setMembers(String[] members) {
-        this.members = members;
+    public void setMemberNames(String[] memberNames) {
+        this.memberNames = memberNames;
     }
 
     public Post[] getPosts() {

@@ -13,7 +13,7 @@
 <body>
 <div class="container col-md-5" style="margin:auto;margin-top:5%">
 
-    <form autocomplete="on" action="/handleRegister" method="POST">
+    <form autocomplete="on" action="handleRegister" method="POST">
         <h2 align="center">注册</h2>
 
         <label class="sr-only">电子邮箱</label>
@@ -40,7 +40,8 @@
         <%
             try {
                 String backnews = (String) request.getAttribute("backnews");
-                out.println("<p style=\"color:#FF0000\">" + backnews + "</p>");
+                if (backnews != null)
+                    out.println("<p style=\"color:#FF0000\">" + backnews + "</p>");
             } catch (Exception e) {
             }
         %>

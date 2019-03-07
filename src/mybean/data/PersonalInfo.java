@@ -20,6 +20,8 @@ public class PersonalInfo {
         posts[1] = new Post();
         posts[2] = new Post();
     }
+
+
     String[] groupIDs, groupNames;//所在的groups的名字与ID
     String[] classes; //个人分类
     String backNews;

@@ -11,6 +11,7 @@ public class HelpRead extends HttpServlet {
         //parameter ->postID
 
         //->read.jsp
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -23,6 +23,7 @@
 
             <!--消息-->
             <h3>消息</h3>
+            <% if (login.isLogined()) { %>
             <ul>
                 <% int i;
                     for (i = 0; i < index.getMessages().length; i++) { %>
@@ -32,6 +33,10 @@
             </ul>
             <!--更多消息(每点击一次就多展示N条消息）-->
             <a href="handleIndex?msgNum=<%=index.getMessages().length+5%>">更多消息</a>
+            <% } else { %>
+            <p>未登陆</p>
+            <% } %>
+
         </div>
 
 
@@ -40,10 +45,11 @@
             <h3>博文</h3>
             <ul>
                 <%
+                    int i;
                     Post[] posts = index.getPosts();
                     for (i = 0; i < posts.length; i++) { %>
                 <li>
-                    <a href="read.jsp">
+                    <a href="handleRead?postID=<%= posts[i].getID()%>">
                         <%= posts[i].getTitle()%>
                     </a>
                     <%= posts[i].getAuthor() + " " + posts[i].getNumReads()%>
