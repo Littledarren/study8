@@ -39,6 +39,7 @@ public class HelpLogin extends HttpServlet {
         });
         Login login = CommonHelper.getLoginBean(request);
         if (uname == null) {
+            login.setSuccess(false);
             login.setBackNews("账户或密码输入错误");
             response.sendRedirect("login.jsp");
         } else {

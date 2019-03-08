@@ -218,12 +218,12 @@
                     <ul class="dropdown-menu">
                         <li>
                             <div class="radio"><label>
-                                <input type="radio" name="optionsRadios" id="public" value="public" checked>公开
+                                <input type="radio" name="private_switch" id="public" value="0" checked>公开
                             </label></div>
                         </li>
                         <li>
                             <div class="radio"><label>
-                                <input type="radio" name="optionsRadios" id="private" value="private" checked>私密
+                                <input type="radio" name="private_switch" id="private" value="1" checked>私密
                             </label></div>
                         </li>
                     </ul>
@@ -238,7 +238,7 @@
                         <% for (i = 0; i < personalInfo.getGroupNames().length; i++) { %>
                         <li>
                             <div class="checkbox"><label>
-                                <input type="checkbox" name="option" value="<%= personalInfo.getGroupIDs()[i]%>">
+                                <input type="checkbox" name="share_group" value="<%= personalInfo.getGroupIDs()[i]%>">
                                 <%= personalInfo.getGroupNames()[i] %>
                             </label></div>
                         </li>
@@ -246,8 +246,8 @@
                     </ul>
                 </li>
                 <br/><br/>
-                <input class="btn btn-sm btn-primary" value="保存草稿" type="submit"/><br/>
-                <input class="btn btn-sm btn-primary" value="发布" type="submit"/><br/>
+                <input class="btn btn-sm btn-primary" name="submit" value="保存草稿" type="submit"/><br/>
+                <input class="btn btn-sm btn-primary" name="submit" value="发布" type="submit"/><br/>
                 <a href="handleIndex" class="btn btn-sm btn-primary">返回</a>
             </div>
         </form>
