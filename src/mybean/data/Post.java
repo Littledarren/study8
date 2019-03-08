@@ -1,11 +1,60 @@
 package mybean.data;
 
+import java.sql.Timestamp;
+
 public class Post {
-    private String ID = "1";
+    private long ID = -1;
     private String title = "testTitle";
     private String author = "testAuthor";
-    private int numReads = 0, numLikes = 0, numComments = 0;
-    private String content = "Hello";
+    private int numReads = 0, numLikes = 0, numComments = 0, numFavorites = 0;
+
+    private String content = "test";
+
+    private Timestamp post_timestamp;
+    private short predefined_classification;
+    private short type;
+    private short share_type;
+
+    public Timestamp getPost_timestamp() {
+        return post_timestamp;
+    }
+
+    public void setPost_timestamp(Timestamp post_timestamp) {
+        this.post_timestamp = post_timestamp;
+    }
+
+    public int getNumFavorites() {
+        return numFavorites;
+    }
+
+    public void setNumFavorites(int numFavorites) {
+        this.numFavorites = numFavorites;
+    }
+
+    public short getPredefined_classification() {
+        return predefined_classification;
+    }
+
+    public void setPredefined_classification(short predefined_classification) {
+        this.predefined_classification = predefined_classification;
+    }
+
+    public short getType() {
+        return type;
+    }
+
+    public void setType(short type) {
+        this.type = type;
+    }
+
+    public short getShare_type() {
+        return share_type;
+    }
+
+    public void setShare_type(short share_type) {
+        this.share_type = share_type;
+    }
+
     private String[] comments;
 
     public String[] getComments() {
@@ -24,11 +73,11 @@ public class Post {
         this.content = content;
     }
 
-    public String getID() {
+    public long getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(long ID) {
         this.ID = ID;
     }
 

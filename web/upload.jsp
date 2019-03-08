@@ -22,9 +22,7 @@
                                     <b class=\"caret\"></b>\
                                 </a>\
                                 <ul class=\"dropdown-menu\">\
-                                    <%
-                                    int i;
-                                    for (i = 0; i < personalInfo.getGroupNames().length; i++) { %>\
+                                    <% for (i = 0; i < personalInfo.getGroupNames().length; i++) { %>\
                                     <li>\
                                         <div class=\"checkbox\"><label>\
                                             <input type=\"checkbox\" name=\"share_group\" value=\"<%= personalInfo.getGroupIDs()[i]%>\">\
@@ -40,7 +38,8 @@
         function cancel() {
             var x = document.getElementById("cancel");
             x.innerHTML = "<div id=\"share\">\
-                    <a class=\"btn\" onclick=\"shInGroups()\">选择groups</a>\
+                    <a class=\"btn\" onclick=";
+            shInGroups();\">选择groups</a>\
                     <li class=\"dropdown\" style=\"margin-left:3%;display:inline-block\">\
                         <a href=\"handle\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">\
                             公开/私密\
@@ -77,18 +76,20 @@
             <a href="handleComments">评论管理</a><br/>
         </div>
 
-        <!--编辑博文-->
-        <form action="handleWrite" method="POST">
+        <!--上传资源-->
+        <form action="handleWrite" method="post" enctype="multipart/form-data">
             <div class="col-md-8" style="background-color: #FFFFFF;height:600px;border:3px solid #00FF00">
-                <h4>编辑博文</h4>
-                <a class="btn" href="handleWrite?action=upload">上传文件</a>
+                <h4>上传资源</h4>
+                <a class="btn" href="handleWrite?action=edit">编辑文章</a>
                 <div class="form-group">
                     <br/>
                     <label for="title" class="sr-only">标题</label>
-                    <input type="text" class="form-control" placeholder="标题" name="title" id="title" required/><br/>
+                    <input type="text" class="form-control" placeholder="标题" name="title" id="title"
+                           required/><br/><br/>
 
-                    <label for="content" class="sr-only">正文</label>
-                    <textarea class="form-control" placeholder="正文" name="content" rows="20" id="content"></textarea>
+                    <input type="file" name="file" size="50"/>
+                    <br/>
+                    <input type="submit" value="Upload File"/>
                 </div>
             </div>
 
@@ -96,74 +97,7 @@
             <!--博文分类-->
             <div class="col-md-2" style="background-color: #FFFFFF;height:600px;border:3px solid #00FF00">
                 <h4>设置</h4>
-                <br/>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        文章类型
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <div class="radio"><label>
-                                <input type="radio" name="blogType" id="yuanchuang" value="1" checked>原创
-                            </label></div>
-                        </li>
-                        <li>
-                            <div class="radio"><label>
-                                <input type="radio" name="blogType" id="zhuanzai" value="2" checked>转载
-                            </label></div>
-                        </li>
-                        <li>
-                            <div class="radio"><label>
-                                <input type="radio" name="blogType" id="fanyi" value="3" checked>翻译
-                            </label></div>
-                        </li>
-                    </ul>
-                </li>
-                <br/>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        博客类型
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <div class="radio"><label>
-                                <input type="radio" name="predefined" value="1" checked>论坛
-                            </label></div>
-                        </li>
-                        <li>
-                            <div class="radio"><label>
-                                <input type="radio" name="predefined" value="2" checked>知识理论
-                            </label></div>
-                        </li>
-                        <li>
-                            <div class="radio"><label>
-                                <input type="radio" name="predefined" value="3" checked>经验分享
-                            </label></div>
-                        </li>
-                        <li>
-                            <div class="radio"><label>
-                                <input type="radio" name="predefined" value="4" checked>资源分享
-                            </label></div>
-                        </li>
-                        <li>
-                            <div class="radio"><label>
-                                <input type="radio" name="predefined" value="5" checked>考研
-                            </label></div>
-                        </li>
-                        <li>
-                            <div class="radio"><label>
-                                <input type="radio" name="predefined" value="6" checked>就业
-                            </label></div>
-                        </li>
-                        <li>
-                            <div class="radio"><label>
-                                <input type="radio" name="predefined" value="7" checked>其他
-                            </label></div>
-                        </li>
-                    </ul>
-                </li>
+
                 <br/>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -171,7 +105,7 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <%
+                        <% int i;
                             for (i = 0; i < personalInfo.getClasses().length; i++) { %>
                         <li>
                             <div class="checkbox">
@@ -211,8 +145,7 @@
                 </div>
                 <br/><br/>
 
-                <input class="btn btn-sm btn-primary" name="submit" value="保存草稿" type="submit"/><br/>
-                <input class="btn btn-sm btn-primary" name="submit" value="发布" type="submit"/><br/>
+                <input class="btn btn-sm btn-primary" name="submit" value="uploadFile" type="submit"/><br/>
                 <a href="handleIndex" class="btn btn-sm btn-primary">返回</a>
             </div>
         </form>
