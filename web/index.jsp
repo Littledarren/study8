@@ -1,4 +1,5 @@
 <%@ page import="mybean.data.Post" %>
+<%@ page import="mybean.data.dbModel.Message" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <jsp:useBean id="index" type="mybean.data.Index" scope="request"/>
@@ -19,15 +20,27 @@
 <body style="background-color:#00FF00">
 <div class="container">
     <div class="row">
-        <div class="col-md-2" style="background-color:#FFFFFF;min-height:600px;border:3px solid #00FF00">
+        <div class="col-md-2" style="background-color:#FFFFFF;min-height:600px;float:left;margin-left:1%">
 
             <!--消息-->
             <h3>消息</h3>
             <% if (login.isLogined()) { %>
             <ul>
                 <% int i;
-                    for (i = 0; i < index.getMessages().length; i++) { %>
-                <li><%= index.getMessages()[i]%>
+                    Message[] messages = index.getMessages();
+                    for (i = 0; i < messages.length; i++) { %>
+                <li>
+                    <% if (messages[i].getMsg_content().charAt(0) == '0') { %>
+                    <a href="handleRead?postID=<%= messages[i].getMsg_content().substring(1) %>">
+                        您关注的博主发了新博文啦</a>
+                    <% } else if (messages[i].getMsg_content().charAt(0) == '1') { %>
+                    <a href="handleRead?groupID=<%= messages[i].getMsg_content().substring(1) %>">
+                        群<%= messages[i].getMsg_content().substring(1)%>发了新公告</a>
+                    <% } else if (messages[i].getMsg_content().charAt(0) == '2') { %>
+                    <%= messages[i].getMsg_content().substring(1) %>
+                    <% } else if (messages[i].getMsg_content().charAt(0) == '3') { %>
+                    <%= messages[i].getMsg_content().substring(1) %>
+                    <% } %>
                 </li>
                 <% } %>
             </ul>
@@ -41,7 +54,7 @@
 
 
         <!--博文-->
-        <div class="col-md-10" style="background-color:#FFFFFF;min-height:600px;border:3px solid #00FF00">
+        <div class="col-md-10" style="background-color:#FFFFFF;min-height:600px;float:right;margin-right:1%">
             <h3>博文</h3>
             <ul>
                 <%
@@ -51,8 +64,12 @@
                 <li>
                     <a href="handleRead?postID=<%= posts[i].getID()%>">
                         <%= posts[i].getTitle()%>
-                    </a>
-                    <%= posts[i].getAuthor() + " " + posts[i].getNumReads()%>
+                    </a><br>
+                    <p style="font-size:15px;color:#707070">
+                        作者：<%= posts[i].getAuthor() + "  " %>
+                        阅读量：<%= posts[i].getNumReads() + "  " %>
+                        <%= posts[i].getPost_timestamp() %>
+                    </p>
                 </li>
                 <% } %>
             </ul>

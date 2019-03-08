@@ -1,17 +1,15 @@
 package mybean.data;
 
 
+import mybean.data.dbModel.Message;
+
 public class Index {
-    String[] messageIDs = {"1", "2", "3"}; //消息ID
-    String[] messages = {"test1", "test2", "test3"}; //消息内容
+
+    Message[] messages;
 
     short postType = -1;  //列出的博文类型
-    Post[] posts = new Post[3];
-    {
-        posts[0] = new Post();
-        posts[1] = new Post();
-        posts[2] = new Post();
-    }
+    Post[] posts;
+
 
     public Post[] getPosts() {
         return posts;
@@ -21,19 +19,11 @@ public class Index {
         this.posts = posts;
     }
 
-    public String[] getMessageIDs() {
-        return messageIDs;
-    }
-
-    public void setMessageIDs(String[] messageID) {
-        this.messageIDs = messageIDs;
-    }
-
-    public String[] getMessages() {
+    public Message[] getMessages() {
         return messages;
     }
 
-    public void setMessages(String[] message) {
+    public void setMessages(Message[] messages) {
         this.messages = messages;
     }
 

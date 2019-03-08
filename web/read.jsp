@@ -18,6 +18,8 @@
     <div class="row">
         <div class="col-md-3 offset-md-1" style="height:500px;background-color:#FFFFFF;border:3px solid #00FF00;">
             <!--博主信息-->
+            <img src="<%= personalInfo.getProfile_photo() %>" class="img-circle" style="width:80;height:80px;">
+            <a href="handleRead?type=attention" class="btn btn-default"> 关注</a>
             <div style="height:270px;background-color:#FFFFFF;border-bottom:2px solid #00FF00;">
                 <p>昵称：
                     <%= personalInfo.getNickname() %>
@@ -144,11 +146,13 @@
 
         <!--一些按钮-->
         <div class="col-md-1" style="height:200px;background-color:#FFFFFF;border:3px solid #00FF00;">
-            <a class="btn" href="handleRead?postID=<%= posts[i].getID() %>&type=like">点赞</a><br/>
-            <a class="btn" href="handleRead?postID=<%= posts[i].getID() %>&type=collect">收藏</a><br/>
-            <a class="btn" href="handleRead?postID=<%= posts[i].getID() %>&type=comment">评论</a><br/>
-            <a class="btn" href="handleRead?postID=<%= posts[i].getID() %>&type=previous">上一篇</a><br/>
-            <a class="btn" href="handleRead?postID=<%= posts[i].getID() %>&type=next">下一篇</a><br/>
+            <div class="btn-group-vertical">
+                <a class="btn" href="handleRead?postID=<%= posts[i].getID() %>&type=like">点赞</a><br/>
+                <a class="btn" href="handleRead?postID=<%= posts[i].getID() %>&type=collect">收藏</a><br/>
+                <a class="btn" href="handleRead?postID=<%= posts[i].getID() %>&type=comment">评论</a><br/>
+                <a class="btn" href="handleRead?postID=<%= posts[i].getID() %>&type=previous">上一篇</a><br/>
+                <a class="btn" href="handleRead?postID=<%= posts[i].getID() %>&type=next">下一篇</a><br/>
+            </div>
         </div>
     </div>
 </div>

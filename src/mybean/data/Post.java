@@ -4,17 +4,17 @@ import java.sql.Timestamp;
 
 public class Post {
     private long ID = -1;
-    private String title = "testTitle";
     private String mail = "testMail";
-    private String author = "testAuthor";
-    private int numReads = 0, numLikes = 0, numComments = 0, numFavorites = 0;
-
+    private String title = "testTitle";
     private String content = "test";
-
     private Timestamp post_timestamp;
     private short predefined_classification;
     private short type;
     private short share_type;
+    private int numReads = 0, numLikes = 0, numComments = 0, numFavorites = 0;
+    private String author = "testAuthor";
+
+
 
     public String getMail() {
         return mail;

@@ -17,13 +17,13 @@
             x.innerHTML = "<div id=\"cancel\">\
                             <a class=\"btn\" onclick=\"cancel()\">取消</a>\
                             <li class=\"dropdown\" style=\"margin-left:3%;display:inline-block\">\
-                                <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">\
+                                <a href=\"#\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\">\
                                     选择groups\
                                     <b class=\"caret\"></b>\
                                 </a>\
                                 <ul class=\"dropdown-menu\">\
-                                    <%
-                                    int i;
+                                    <%\
+                                    int i;\
                                     for (i = 0; i < personalInfo.getGroupNames().length; i++) { %>\
                                     <li>\
                                         <div class=\"checkbox\"><label>\
@@ -69,17 +69,19 @@
 <div class="container">
     <div class="row">
         <!--管理-->
-        <div class="col-md-2" style="background-color: #FFFFFF;height:600px;border:3px solid #00FF00">
+        <div class="col-md-2" style="background-color: #FFFFFF;height:600px;float:left;margin-left:3%">
             <h4>管理</h4>
             <br/>
-            <a href="handleArticles">文章管理</a><br/><br/>
-            <a href="handleClasses">个人分类管理</a><br/><br/>
-            <a href="handleComments">评论管理</a><br/>
+            <div class="btn-group-vertical">
+                <a class="btn btn-default">文章管理</a>
+                <a class="btn btn-default">个人分类管理</a>
+                <a class="btn btn-default">评论管理</a>
+            </div>
         </div>
 
         <!--编辑博文-->
         <form action="handleWrite" method="POST">
-            <div class="col-md-8" style="background-color: #FFFFFF;height:600px;border:3px solid #00FF00">
+            <div class="col-md-8" style="background-color: #FFFFFF;height:600px;float:left;margin-left:3%">
                 <h4>编辑博文</h4>
                 <a class="btn" href="handleWrite?action=upload">上传文件</a>
                 <div class="form-group">
@@ -94,120 +96,147 @@
 
 
             <!--博文分类-->
-            <div class="col-md-2" style="background-color: #FFFFFF;height:600px;border:3px solid #00FF00">
+            <div class="col-md-2" style="background-color: #FFFFFF;height:600px;float:right;margin-right:3%">
                 <h4>设置</h4>
-                <br/>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        文章类型
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <div class="radio"><label>
-                                <input type="radio" name="blogType" id="yuanchuang" value="1" checked>原创
-                            </label></div>
-                        </li>
-                        <li>
-                            <div class="radio"><label>
-                                <input type="radio" name="blogType" id="zhuanzai" value="2" checked>转载
-                            </label></div>
-                        </li>
-                        <li>
-                            <div class="radio"><label>
-                                <input type="radio" name="blogType" id="fanyi" value="3" checked>翻译
-                            </label></div>
-                        </li>
-                    </ul>
-                </li>
-                <br/>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        博客类型
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <div class="radio"><label>
-                                <input type="radio" name="predefined" value="1" checked>论坛
-                            </label></div>
-                        </li>
-                        <li>
-                            <div class="radio"><label>
-                                <input type="radio" name="predefined" value="2" checked>知识理论
-                            </label></div>
-                        </li>
-                        <li>
-                            <div class="radio"><label>
-                                <input type="radio" name="predefined" value="3" checked>经验分享
-                            </label></div>
-                        </li>
-                        <li>
-                            <div class="radio"><label>
-                                <input type="radio" name="predefined" value="4" checked>资源分享
-                            </label></div>
-                        </li>
-                        <li>
-                            <div class="radio"><label>
-                                <input type="radio" name="predefined" value="5" checked>考研
-                            </label></div>
-                        </li>
-                        <li>
-                            <div class="radio"><label>
-                                <input type="radio" name="predefined" value="6" checked>就业
-                            </label></div>
-                        </li>
-                        <li>
-                            <div class="radio"><label>
-                                <input type="radio" name="predefined" value="7" checked>其他
-                            </label></div>
-                        </li>
-                    </ul>
-                </li>
-                <br/>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        个人分类
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <%
-                            for (i = 0; i < personalInfo.getClasses().length; i++) { %>
-                        <li>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="self_classification"
-                                           value="<%=personalInfo.getClasses()[i]%>">
-                                    <%=personalInfo.getClasses()[i]%>
-                                </label>
-                            </div>
-                        </li>
-                        <% } %>
-                    </ul>
-                </li>
-
-                <br/>
-                <div id="share">
-                    <a class="btn" onclick="shInGroups()">选择groups</a>
-                    <li class="dropdown" style="margin-left:3%;display:inline-block">
-
-                        <a href="handle" class="dropdown-toggle" data-toggle="dropdown">
-                            公开/私密
+                <div class="btn-group-vertical">
+                    <li class="dropdown">
+                        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            文章类型
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
                                 <div class="radio"><label>
-                                    <input type="radio" name="private_switch" id="public" value="0" checked>公开
+                                    <input type="radio" name="blogType" id="yuanchuang" value="1" checked>原创
                                 </label></div>
                             </li>
                             <li>
                                 <div class="radio"><label>
-                                    <input type="radio" name="private_switch" id="private" value="1" checked>私密
+                                    <input type="radio" name="blogType" id="zhuanzai" value="2" checked>转载
+                                </label></div>
+                            </li>
+                            <li>
+                                <div class="radio"><label>
+                                    <input type="radio" name="blogType" id="fanyi" value="3" checked>翻译
                                 </label></div>
                             </li>
                         </ul>
                     </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            博客类型
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="radio"><label>
+                                    <input type="radio" name="predefined" value="1" checked>论坛
+                                </label></div>
+                            </li>
+                            <li>
+                                <div class="radio"><label>
+                                    <input type="radio" name="predefined" value="2" checked>知识理论
+                                </label></div>
+                            </li>
+                            <li>
+                                <div class="radio"><label>
+                                    <input type="radio" name="predefined" value="3" checked>经验分享
+                                </label></div>
+                            </li>
+                            <li>
+                                <div class="radio"><label>
+                                    <input type="radio" name="predefined" value="4" checked>资源分享
+                                </label></div>
+                            </li>
+                            <li>
+                                <div class="radio"><label>
+                                    <input type="radio" name="predefined" value="5" checked>考研
+                                </label></div>
+                            </li>
+                            <li>
+                                <div class="radio"><label>
+                                    <input type="radio" name="predefined" value="6" checked>就业
+                                </label></div>
+                            </li>
+                            <li>
+                                <div class="radio"><label>
+                                    <input type="radio" name="predefined" value="7" checked>其他
+                                </label></div>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            个人分类
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <%
+                                for
+                                (
+                                i
+                                =
+                                0
+                                ;
+                                i
+                                <
+                                personalInfo
+                                .
+                                getClasses
+                                (
+                                )
+                                .
+                                length
+                                ;
+                                i
+                                ++
+                                )
+                                { %>
+                            <li>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="self_classification"
+                                               value="<%=personalInfo.getClasses()[i]%>">
+                                        <%=personalInfo
+                                            .
+                                            getClasses
+                                            (
+                                            )
+                                            [
+                                            i
+                                            ]%>
+                                    </label>
+                                </div>
+                            </li>
+                            <% } %>
+                        </ul>
+                    </li>
+
+
+                    <div id="share">
+                        <a class="btn" onclick="shInGroups()">选择groups</a>
+                        <li class="dropdown" style="margin-left:3%;display:inline-block">
+
+                            <a href="handle" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                公开/私密
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <div class="radio"><label>
+                                        <input type="radio" name="private_switch" id="public" value="0" checked>公开
+                                    </label></div>
+                                </li>
+                                <li>
+                                    <div class="radio"><label>
+                                        <input type="radio" name="private_switch" id="private" value="1" checked>私密
+                                    </label></div>
+                                </li>
+                            </ul>
+                        </li>
+                    </div>
                 </div>
                 <br/><br/>
 

@@ -34,8 +34,8 @@
             <li>
                 <form class="form-inline" role="form" style="margin-top:1%;margin-left:550px" action="/handleIndex" method="POST">
                     <div class="form-group">
-                        <label class="sr-only" for="name">搜索</label>
-                        <input type="text" class="form-control" id="title" placeholder="搜索博文名" style="display:inline-block">
+                        <label class="sr-only" for="title">搜索</label>
+                        <input type="text" class="form-control" id="title" name="title" placeholder="搜索博文名" style="display:inline-block">
                     </div>
                     <button type="submit" class="btn btn-default" style="display:inline-block">OK</button>
                 </form>
