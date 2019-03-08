@@ -46,8 +46,9 @@ public class HelpRegister extends HttpServlet {
         //1. check email format
         boolean emailWellFormatted = CommonHelper.checkEmailFormat(email);
         if (!emailWellFormatted) {
-            req.setAttribute("backnews", "email is not in right format");
+            req.setAttribute("backnews", "邮箱格式错误");
             req.getRequestDispatcher("register.jsp").forward(req, resp);
+            return;
         }
 
         //2. check email not exist
@@ -66,14 +67,16 @@ public class HelpRegister extends HttpServlet {
             }
         });
         if (!emailNotExists) {
-            req.setAttribute("backnews", "email already has been registered");
+            req.setAttribute("backnews", "邮箱已被注册");
             req.getRequestDispatcher("register.jsp").forward(req, resp);
+            return;
         }
         //3. check passwords equal
         boolean passwordEquals = password.equals(confirmPassword);
         if (!passwordEquals) {
-            req.setAttribute("backnews", "passwords are not equal");
+            req.setAttribute("backnews", "两次输入的密码不一致");
             req.getRequestDispatcher("register.jsp").forward(req, resp);
+            return;
         }
 
         boolean insertOK = (boolean) dh.execSql(con -> {
@@ -97,10 +100,9 @@ public class HelpRegister extends HttpServlet {
             }
         });
         if (insertOK) {
-            req.getRequestDispatcher("login.jsp").forward(req, resp);
-            return;
+            resp.sendRedirect("login.jsp");
         } else {
-            req.setAttribute("backnews", "inserting into database failed");
+            req.setAttribute("backnews", "数据库错误");
             req.getRequestDispatcher("register.jsp").forward(req, resp);
         }
 

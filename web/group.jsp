@@ -19,39 +19,6 @@
     <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <%@ include file="nav.txt" %>
-    <script>
-        function input(String
-
-        _type;
-        )
-        {
-            if (_type === "名片")
-                x = document.getElementById("input1");  // 找到元素
-            if (_type === "公告")
-                x = document.getElementById("input2");
-            x.innerHTML = "<form id=\"cancel\" role=\"form\" action=\"handleGroup\" method=\"POST\">\n" +
-                "             <div class=\"form-group\">\n" +
-                "                  <label class=\"sr-only\" for=\"content\">content</label>\n" +
-                "                  <input type=\"text\" class=\"form-control\" id=\"content\" name=\"content\" placeholder=" + _type + "/>\n" +
-                "             </div>\n" +
-                "             <input type=\"hidden\" class=\"form-control\" name=\"groupID_type\" value=\"<%= group.getGroupID()+" "+_type %>\"/>" +
-                "             <button type=\"submit\" class=\"btn btn-default\ onclick=\"cancel\" >OK</button>\n" +
-                "             <button class=\"btn btn-default\" onclick=\"cancel\">取消</button>\n" +
-                "        </form>";    // 改变内容
-        }
-
-        function cancel(String
-
-        _type;
-        )
-        {
-            x = document.getElementById("cancel");  // 找到元素
-            if (_type === "公告")
-                x.innerHTML = "<a id=\"input\" class=\"btn\" onclick=\"input()\">发公告</a>";
-            else if (type === "名片")
-                x.innerHTML = "<a id=\"input\" class=\"btn\" onclick=\"input()\">修改名片</a>";
-        }
-    </script>
 </head>
 <body style="background-color:#00FF00">
 <div class="container">
@@ -102,21 +69,51 @@
         </div>
 
         <!--该group的最新博文-->
-        <div class=" col-md-9" style="height:550px;background-color:#FFFFFF;border:3px solid #00FF00;">
-            <h3>最新博文</h3>
-            <ul>
-                <% int i;
-                    for (i = 0; i < group.getPosts().length; i++) { %>
-                <li>
-                    <a href="handleGroup?postID=<%= group.getPosts()[i].getID() %>">
-                        <%= group.getPosts()[i].getTitle() %>
-                    </a>
-                    <%= group.getPosts()[i].getAuthor() + " " + group.getPosts()[i].getNumReads()%>
-                </li>
-                <% } %>
-            </ul>
+        <div class=" col-md-9
+                            " style="height:550px;background-color:#FFFFFF;border:3px solid #00FF00;">
+                            <h3>最新博文</h3>
+                            <ul>
+                                <% int i;
+                                    for (i = 0; i < group.getPosts().length; i++) { %>
+                                <li>
+                                    <a href="handleGroup?postID=<%= group.getPosts()[i].getID() %>">
+                                        <%= group.getPosts()[i].getTitle() %>
+                                    </a>
+                                    <%= group.getPosts()[i].getAuthor() + " " + group.getPosts()[i].getNumReads()%>
+                                </li>
+                                <% } %>
+                            </ul>
+            </div>
         </div>
     </div>
-</div>
 </body>
 </html>
+<script>
+    function input(
+        _type
+    ) {
+        if (_type === "名片")
+            var x = document.getElementById("input1");  // 找到元素
+        else if (_type === "公告")
+            var x = document.getElementById("input2");
+        x.innerHTML = "<form id=\"cancel\" role=\"form\" action=\"handleGroup\" method=\"POST\">\n" +
+            "             <div class=\"form-group\">\n" +
+            "                  <label class=\"sr-only\" for=\"content\">content</label>\n" +
+            "                  <input type=\"text\" class=\"form-control\" id=\"content\" name=\"content\" placeholder=" + _type + "/>\n" +
+            "             </div>\n" +
+            "             <input type=\"hidden\" class=\"form-control\" name=\"groupID_type\" value=\"<%= group.getGroupID()+" "+_type %>\"/>" +
+            "             <button type=\"submit\" class=\"btn btn-default\ onclick=\"cancel\" >OK</button>\n" +
+            "             <button class=\"btn btn-default\" onclick=\"cancel\">取消</button>\n" +
+            "        </form>";    // 改变内容
+    }
+
+    function cancel(
+        _type
+    ) {
+        var x = document.getElementById("cancel");  // 找到元素
+        if (_type === "公告")
+            x.innerHTML = "<a id=\"input\" class=\"btn\" onclick=\"input()\">发公告</a>";
+        else if (type === "名片")
+            x.innerHTML = "<a id=\"input\" class=\"btn\" onclick=\"input()\">修改名片</a>";
+    }
+</script>

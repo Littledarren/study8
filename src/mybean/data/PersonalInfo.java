@@ -22,8 +22,8 @@ public class PersonalInfo {
     }
 
 
-    String[] groupIDs, groupNames;//所在的groups的名字与ID
-    String[] classes; //个人分类
+    String[] groupIDs = {"test"}, groupNames = {"test"};//所在的groups的名字与ID
+    String[] classes = {"test"}; //个人分类
     String backNews;
 
     public Post[] getPosts() {

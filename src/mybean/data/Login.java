@@ -1,7 +1,6 @@
 package mybean.data;
 
 public class Login {
-    private long uid;
 
     private String account, password, nickname;
 
@@ -16,13 +15,6 @@ public class Login {
         this.account = account;
     }
 
-    public long getUid() {
-        return uid;
-    }
-
-    public void setUid(long uid) {
-        this.uid = uid;
-    }
 
     public String getPassword() {
         return password;

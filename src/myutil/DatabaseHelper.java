@@ -13,7 +13,7 @@ import java.sql.SQLException;
 
 
 public class DatabaseHelper {
-    private static final String DBCONF_JSON = "WEB-INF/classes/conf/DBconf.json";
+    private static final String DBCONF_JSON = "WEB-INF/DBconf.json";
 
     private static String className;
     private static String url;
