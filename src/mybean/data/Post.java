@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 public class Post {
     private long ID = -1;
     private String title = "testTitle";
+    private String mail = "testMail";
     private String author = "testAuthor";
     private int numReads = 0, numLikes = 0, numComments = 0, numFavorites = 0;
 
@@ -14,6 +15,14 @@ public class Post {
     private short predefined_classification;
     private short type;
     private short share_type;
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
 
     public Timestamp getPost_timestamp() {
         return post_timestamp;

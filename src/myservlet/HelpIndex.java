@@ -52,59 +52,99 @@ public class HelpIndex extends HttpServlet {
              -> index.jsp
 
          */
-
+        //1.get some data from Helper
         Login login = CommonHelper.getLoginBean(req);
         DatabaseHelper databaseHelper = DatabaseHelper.getInstance(getServletContext());
 
+        //2. get predefined_classification and num *****this type is predefined_classification
         String typeString = req.getParameter("type");
         short type = predefined.getOrDefault(typeString, (short) 8);
-
-        short postType
+        short tempType = 8;
+        int tempNum = 5;
         try {
 
+            tempType = Short.valueOf(req.getParameter("postType"));
+            tempNum = Integer.valueOf(req.getParameter("postNum"));
+        } catch (NumberFormatException e) {
+            // this may mean
+            tempType = type;
         }
-        short postType = Short.valueOf(req.getParameter("postType"));
-        int postNum = Integer.valueOf(req.getParameter("postNum"));
+        final int postNum = tempNum;
+        final short postType = tempType;
 
+        //3.set bean
         Index index = new Index();
         index.setMessages(new String[]{"aaa", "bbb", "ccc"});
-
-        if (type == 8) {
-            Post[] posts = (Post[]) databaseHelper.execSql(con -> {
+        Post[] posts = null;
+        if (postType == 8) {
+            //recommended
+            posts = (Post[]) databaseHelper.execSql(con -> {
                 ArrayList<Post> arrayList = new ArrayList<>();
                 try {
-                    PreparedStatement ps = con.prepareStatement("select post_id, title,  " +
-                            "post_url, post_timestamp, predefined_classification, type, mail, " +
-                            "numReads, numLikes, numComments, numFavourites " +
+                    PreparedStatement ps = con.prepareStatement("select * " +
                             "from post " +
-                            "where title like ? and share_type=0 " +
+                            "where share_type=0 " +
                             "order by 0.1 * numReads + 5 * numLikes + numComments + 10 * numFavourites DESC, post_id " +
                             "limit ?, ?");
 
-                    ps.setInt(2, start);
-                    ps.setInt(3, num);
-                    ResultSet rs = ps.executeQuery();
-                    while (rs.next()) {
-                        Post post = new Post();
-                        post.setID(rs.getLong(1));
-                        post.setTitle(rs.getString(2));
-                        post.setContent(rs.getString(3)); // actual url
-                        post.setPost_timestamp(rs.getTimestamp(4));
-                        post.setPredefined_classification(rs.getShort(5));
-                        post.setType(rs.getShort(6));
-                        post.setAuthor(rs.getString(7));  //actual mail
-                        arrayList.add(post);
-                    }
+                    ps.setInt(1, postNum - 5);
+                    ps.setInt(2, 5);
+                    getPostsFromSQLstatement(arrayList, ps);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
 
-
+                return arrayList.toArray(new Post[0]);
+            });
+        } else if (postType == 9) {
+            //focused person
+            if (!login.isLogined()) {
+                resp.sendRedirect("login.jsp");
+                return;
+            }
+            final String mail = login.getAccount();
+            posts = (Post[]) databaseHelper.execSql(con -> {
+                ArrayList<Post> arrayList = new ArrayList<>();
+                try {
+                    PreparedStatement ps = con.prepareStatement("select * " +
+                            "from post natural join user " +
+                            "where share_type=0 and post.mail in " +
+                            "(select user_watch_user.mail from user_watch_user where use_mail = ?) " +
+                            "order by 0.1 * numReads + 5 * numLikes + numComments + 10 * numFavourites DESC, post_id " +
+                            "limit ?, ?");
+                    ps.setString(1, mail);
+                    ps.setInt(1, postNum - 5);
+                    ps.setInt(2, 5);
+                    getPostsFromSQLstatement(arrayList, ps);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return arrayList.toArray(new Post[0]);
+            });
+        } else {
+            posts = (Post[]) databaseHelper.execSql(con -> {
+                ArrayList<Post> arrayList = new ArrayList<>();
+                try {
+                    PreparedStatement ps = con.prepareStatement("select * " +
+                            "from post " +
+                            "where share_type=0 and type=? " +
+                            "order by 0.1 * numReads + 5 * numLikes + numComments + 10 * numFavourites DESC, post_id " +
+                            "limit ?, ?");
+                    ps.setShort(1, postType);
+                    ps.setInt(1, postNum - 5);
+                    ps.setInt(2, 5);
+                    getPostsFromSQLstatement(arrayList, ps);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 return arrayList.toArray(new Post[0]);
             });
         }
 
         index.setPosts(posts);
+        index.setPostType(postType);
+
+
         req.setAttribute("index", index);
 
         req.getRequestDispatcher("/index.jsp").forward(req, resp);
@@ -125,9 +165,7 @@ public class HelpIndex extends HttpServlet {
         Post[] posts = (Post[]) databaseHelper.execSql(con -> {
             ArrayList<Post> arrayList = new ArrayList<>();
             try {
-                PreparedStatement ps = con.prepareStatement("select post_id, title,  " +
-                        "post_url, post_timestamp, predefined_classification, type, mail, " +
-                        "numReads, numLikes, numComments, numFavourites " +
+                PreparedStatement ps = con.prepareStatement("select * " +
                         "from post " +
                         "where title like ? and share_type=0 " +
                         "order by 0.1 * numReads + 5 * numLikes + numComments + 10 * numFavourites DESC, post_id " +
@@ -135,18 +173,7 @@ public class HelpIndex extends HttpServlet {
                 ps.setString(1, "%" + keywords + "%");
                 ps.setInt(2, start);
                 ps.setInt(3, num);
-                ResultSet rs = ps.executeQuery();
-                while (rs.next()) {
-                    Post post = new Post();
-                    post.setID(rs.getLong(1));
-                    post.setTitle(rs.getString(2));
-                    post.setContent(rs.getString(3)); // actual url
-                    post.setPost_timestamp(rs.getTimestamp(4));
-                    post.setPredefined_classification(rs.getShort(5));
-                    post.setType(rs.getShort(6));
-                    post.setAuthor(rs.getString(7));  //actual mail
-                    arrayList.add(post);
-                }
+                getPostsFromSQLstatement(arrayList, ps);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -155,6 +182,27 @@ public class HelpIndex extends HttpServlet {
             return arrayList.toArray(new Post[0]);
         });
         return posts;
+    }
+
+    private void getPostsFromSQLstatement(ArrayList<Post> arrayList, PreparedStatement ps) throws SQLException {
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Post post = new Post();
+            post.setID(rs.getLong(1));
+            post.setMail(rs.getString(2));
+            post.setTitle(rs.getString(3));
+            post.setContent(rs.getString(4)); // actual url
+            post.setPost_timestamp(rs.getTimestamp(5));
+            post.setPredefined_classification(rs.getShort(6));
+            post.setType(rs.getShort(7));
+            post.setShare_type(rs.getShort(8));
+            post.setNumReads(rs.getInt(9));
+            post.setNumLikes(rs.getInt(10));
+            post.setNumComments(rs.getInt(11));
+            post.setNumFavorites(rs.getInt(12));
+            post.setAuthor(rs.getString(13));
+            arrayList.add(post);
+        }
     }
 
 
