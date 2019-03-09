@@ -9,16 +9,25 @@
     <title>mine</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-image: url("images/6.jpg");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    </style>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <%@ include file="nav.txt" %>
 </head>
-<body style="background-color:#00FF00">
+<body>
 <div class="container">
     <div class="row">
-        <div class="col-md-3 offset-md-1" style="height:550px;background-color:#FFFFFF;border:3px solid #00FF00;">
+        <div class="col-md-3 offset-md-1" style="height:550px;background-color:#FFFFFF;opacity:0.7">
             <!--个人分类-->
             <div style="height:150px;background-color:#FFFFFF;border-bottom:2px solid #00FF00;">
                 <h3>个人分类</h3>
@@ -91,7 +100,7 @@
                                 Group[] groups = personalInfo.getGroups();
                                 for (i = 0; i < groups.length; i++) { %>
                             <li>
-                                <a href="handleGroup?groupID=<%= groups[i].getGid() %>">
+                                <a href="handleMine?action=showGroup&groupID=<%= groups[i].getGid() %>">
                                     <%= groups[i].getGname() %>
                                 </a>
                             </li>
@@ -102,7 +111,7 @@
             </div>
         </div>
 
-        <div class="col-md-9" style="height:550px;background-color:#FFFFFF;border:3px solid #00FF00;">
+        <div class="col-md-9" style="height:550px;background-color:#FFFFFF;opacity:0.7">
             <div style="text-align:center;">
                 <!--昵称-->
                 <p style="font-size:30px">

@@ -9,7 +9,7 @@ public class Group {
     //    private String myName; //我在本group中的备注名 //forbid
     private String noticeContent; //公告ID与题目
 
-    private Post[] posts;
+    private Post[] posts = new Post[1];
 
     String[] memberIDs, memberNames;  //group成员
     boolean isAdmin = false; //是否为管理员

@@ -11,14 +11,25 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('images/6.jpg');
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            background-color: #E0E4D0;
+            opacity: 0.9;
+        }
+    </style>
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <%@ include file="nav.txt" %>
-<body style="background-color:#00FF00">
+<body>
 <div class="container">
     <div class="row">
-        <div class="col-md-3 offset-md-1" style="min-height:600px;background-color:#FFFFFF;border:3px solid #00FF00;">
+        <div class="col-md-3 offset-md-1" style="min-height:600px;background-color:#FFFFFF;">
             <!--博主信息-->
             <%
                 User user = personalInfo.getUser();
@@ -88,7 +99,7 @@
         </div>
 
 
-        <div class="col-md-8" style="min-height:600px;background-color:#FFFFFF;border:3px solid #00FF00;">
+        <div class="col-md-8" style="min-height:600px;background-color:#FFFFFF;">
             <!--文章内容-->
             <div>
                 <h3><%= post.getTitle() %>
@@ -163,7 +174,7 @@
 
 
         <!--一些按钮-->
-        <div class="col-md-1" style="height:200px;background-color:#00FF00;border:3px solid #00FF00;">
+        <div class="col-md-1" style="height:200px;">
             <div class="btn-group-vertical">
                 <span id="like"><a class="btn btn-default" href="handleRead?postID=<%= post.getID() %>&type=like"
                                    onclick="likeClick('like')">点赞</a></span>

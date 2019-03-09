@@ -1,12 +1,16 @@
 package myutil;
 
+import mybean.data.Group;
 import mybean.data.Login;
 import mybean.data.PersonalInfo;
 import mybean.data.Post;
 import mybean.data.dbModel.User;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -142,6 +146,46 @@ public class CommonHelper {
         } else {
             return 0;
         }
+    }
+
+    public static Group getGroupFromDB(HttpServletRequest request, HttpServletResponse response, DatabaseHelper dh, String account, long gid) throws ServletException, IOException {
+        Group group = (Group) dh.execSql(con -> {
+            try {
+                PreparedStatement ps = con.prepareStatement("select * from sgroup where gid=?");
+                Group temp = new Group();
+                ps.setLong(1, gid);
+                ResultSet rs = ps.executeQuery();
+                rs.next();
+                temp.setGid(rs.getLong(1));
+                temp.setGname(rs.getString(2));
+                temp.setNoticeContent(rs.getString(3));
+
+                ps = con.prepareStatement("select mail, uname, authority from user_in_group natural join user where gid=?");
+                ps.setLong(1, gid);
+                rs = ps.executeQuery();
+
+                ArrayList<String> mails = new ArrayList<>();
+                ArrayList<String> names = new ArrayList<>();
+                int authority = 1;
+                while (rs.next()) {
+                    String mail = rs.getString(1);
+                    mails.add(mail);
+                    names.add(rs.getString(2));
+                    if (mail.equals(account)) {
+                        authority = rs.getShort(3);
+                    }
+                }
+                temp.setMemberIDs(mails.toArray(new String[0]));
+                temp.setMemberNames(names.toArray(new String[0]));
+                return temp;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return null;
+            }
+        });
+
+
+        return group;
     }
     public static void getPostFromRS(Post post, ResultSet rs) throws SQLException {
         post.setID(rs.getLong(1));

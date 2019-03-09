@@ -95,7 +95,7 @@
         <%--</div>--%>
 
         <div class="col-6 col-md-2" id="sidebar"
-             style="background-color: #FFFFFF;height:600px;border:0.1px solid #ffffff">
+             style="background-color: #FFFFFF;height:600px;opacity:0.7">
             <h4>管理</h4>
             <div class="list-group">
                 <a class="list-group-item" href="#" target="">文章管理</a>
@@ -106,7 +106,7 @@
 
         <!--编辑博文-->
         <form action="handleWrite" method="POST">
-            <div class="col-md-7" style="background-color: #FFFFFF;height:600px;float:left;margin-left:2%">
+            <div class="col-md-7" style="background-color: #FFFFFF;height:600px;float:left;margin-left:2%;opacity:0.95">
                 <h4>编辑博文</h4>
                 <a class="btn btn-default" href="handleWrite?action=upload">上传文件</a>
                 <div class="form-group">
@@ -122,7 +122,7 @@
 
             <!--博文分类-->
             <div class="col-md-2"
-                 style="background-color: #FFFFFF;height:600px;float:right;margin-right:2%;text-align:center">
+                 style="background-color: #FFFFFF;height:600px;float:right;margin-right:2%;text-align:center;opacity:0.7">
                 <h4>设置</h4>
                 <div class="btn-group-vertical">
                     <div class="dropdown">

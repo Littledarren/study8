@@ -68,7 +68,7 @@
             <% Post[] posts = index.getPosts();
                     for (i = 0; i < posts.length; i++) { %>
             <div style="border-bottom:1px solid #dddddd">
-                <a href="handleRead?postID=<%= posts[i].getID()%>" style="font-size:25px;color:#000000">
+                <a href="handleRead?postID=<%= posts[i].getID()%>" style="font-size:20px;color:#000000">
                         <%= posts[i].getTitle()%>
                     </a><br>
 

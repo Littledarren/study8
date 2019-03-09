@@ -28,10 +28,10 @@
             <!--group名与groupID-->
             <div style="height:50px;background-color:#FFFFFF;border-bottom:2px solid #00FF00;">
                 <h3>
-                    <jsp:getProperty name="group" property="groupName"/>
+                    <%= group.getGname()%>
                 </h3>
                 <p>
-                    <jsp:getProperty name="group" property="groupID"/>
+                    <%= group.getGid()%>
                 </p>
             </div>
 
@@ -49,45 +49,42 @@
                     <li><a id="input1" class="btn" onclick="input(<%= "名片" %>)">修改名片</a></li>
                     <br/>
                     <li>
-                        <a href="handleGroup?type=members&groupID=<%= group.getGroupID()%>">查看Group成员</a>
+                        <a href="handleGroup?type=members&groupID=<%= group.getGid()%>">查看Group成员</a>
                     </li>
                     <br/>
                     <!--管理员才有的功能-->
                         <% if (group.isAdmin() == true) { %>
-                    <li><a id="input2" class="btn" onclick="input(<%= "公告" %>)">发公告</a></li>
+                    <li><a id="input2" class="btn" onclick="input('公告')">发公告</a></li>
                     <br/>
                     <li>
                         <form role="form" action="handleGroup" method="POST">
                             <input type="text" class="form-control" name="memberID" placeholder="输入成员ID"/>
-                            <button type="submit" class="btn btn-default>踢人</button>
+                            <button type="submit" class="btn btn-default">踢人</button>
                         </form>
                     </li>
                     <% } %>
-                    <li><a href=" handleGroup?groupID=<%= group.getGroupID() %>">退出group</a></li>
+                    <li><a href="handleGroup?groupID=<%= group.getGid() %>">退出group</a></li>
                 </ul>
             </div>
         </div>
 
-        <!--该group的最新博文-->
-        <div class=" col-md-9
-                            " style="height:550px;background-color:#FFFFFF;border:3px solid #00FF00;">
-                            <h3>最新博文</h3>
-                            <ul>
-                                <% int i;
-                                    for (i = 0; i < group.getPosts().length; i++) { %>
-                                <li>
-                                    <a href="handleGroup?postID=<%= group.getPosts()[i].getID() %>">
-                                        <%= group.getPosts()[i].getTitle() %>
-                                    </a>
-                                    <%= group.getPosts()[i].getAuthor() + " " + group.getPosts()[i].getNumReads()%>
-                                </li>
-                                <% } %>
-                            </ul>
-            </div>
+        <%--该group的最新博文--%>
+        <div class="col-md-9" style="height:550px;background-color:#FFFFFF;border:3px solid #00FF00">
+            <h3>最新博文</h3>
+            <ul>
+                <% int i;
+                    for (i = 0; i < group.getPosts().length; i++) { %>
+                <li>
+                    <a href="handleGroup?postID=<%= group.getPosts()[i].getID() %>">
+                        <%= group.getPosts()[i].getTitle() %>
+                    </a>
+                    <%= group.getPosts()[i].getAuthor() + " " + group.getPosts()[i].getNumReads()%>
+                </li>
+                <% } %>
+            </ul>
         </div>
     </div>
-</body>
-</html>
+</div>
 <script>
     function input(
         _type
@@ -101,7 +98,7 @@
             "                  <label class=\"sr-only\" for=\"content\">content</label>\n" +
             "                  <input type=\"text\" class=\"form-control\" id=\"content\" name=\"content\" placeholder=" + _type + "/>\n" +
             "             </div>\n" +
-            "             <input type=\"hidden\" class=\"form-control\" name=\"groupID_type\" value=\"<%= group.getGroupID()+" "+_type %>\"/>" +
+            "             <input type=\"hidden\" class=\"form-control\" name=\"groupID_type\" value=\"<%=group.getGid() %>" + _type + "\"/>" +
             "             <button type=\"submit\" class=\"btn btn-default\ onclick=\"cancel\" >OK</button>\n" +
             "             <button class=\"btn btn-default\" onclick=\"cancel\">取消</button>\n" +
             "        </form>";    // 改变内容
@@ -117,3 +114,6 @@
             x.innerHTML = "<a id=\"input\" class=\"btn\" onclick=\"input()\">修改名片</a>";
     }
 </script>
+</body>
+</html>
+

@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class HelpMine extends HttpServlet {
@@ -25,12 +26,13 @@ public class HelpMine extends HttpServlet {
             response.sendRedirect("login.jsp");
             return;
         }
+        long groupId = 0L;
         DatabaseHelper databaseHelper = DatabaseHelper.getInstance(getServletContext());
         if (submit.equals("create")) {
             //create group
             String create = request.getParameter("create");
 
-            long groupId = (long) databaseHelper.execSql(con -> {
+            groupId = (long) databaseHelper.execSql(con -> {
                 try {
                     PreparedStatement ps = con.prepareStatement("insert into sgroup " +
                             "(gname, notice_board) values (?, ?)");
@@ -57,42 +59,48 @@ public class HelpMine extends HttpServlet {
                 }
 
             });
-            Group group = (Group) databaseHelper.execSql(con -> {
+
+        } else if (submit.equals("join")) {
+            String gidText = request.getParameter("join");
+            groupId = Long.parseLong(gidText);
+            final long gid = groupId;
+            databaseHelper.execSql(con -> {
                 try {
-                    PreparedStatement ps = con.prepareStatement("select * from sgroup where gid=?");
-                    Group temp = new Group();
-                    ps.setLong(1, groupId);
-                    ResultSet rs = ps.executeQuery();
-                    rs.next();
-                    temp.setGid(rs.getLong(1));
-                    temp.setGname(rs.getString(2));
-                    temp.setNoticeContent(rs.getString(3));
+                    PreparedStatement ps = con.prepareStatement("insert into message (mail, msgcontent, recvtime)" +
+                            "select mail, ?, ? from user_in_group where user_in_group.gid=?");
+                    ps.setString(1, "2" + gidText + "有人入群");
+                    ps.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+                    ps.setLong(3, gid);
+                    ps.executeUpdate();
 
-                    ps = con.prepareStatement("select * from user_in_group where gid=?");
-                    ps.setLong(1, groupId);
-                    rs = ps.executeQuery();
+                    ps = con.prepareStatement("insert into user_in_group " +
+                            "values (?, ?, ?)");
+                    ps.setLong(1, gid);
+                    ps.setString(2, account);
+                    ps.setShort(3, (short) 1);
+                    ps.executeUpdate();
 
-                    ArrayList<String> mails = new ArrayList<>();
-                    ArrayList<String> names = new ArrayList<>();
-                    while (rs.next()) {
-
-                    }
-                    return temp;
+                    return null;
                 } catch (SQLException e) {
                     e.printStackTrace();
                     return null;
                 }
             });
-        } else if (submit.equals("join")) {
-            String gidText = request.getParameter("join");
-            long gid = Long.parseLong(gidText);
 
         }
+
+        final long gid = groupId;
+
+        Group group = CommonHelper.getGroupFromDB(request, response, databaseHelper, account, gid);
+        request.setAttribute("group", group);
+        request.getRequestDispatcher("group.jsp").forward(request, response);
     }
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //pernal info
+
+        String action = request.getParameter("action");
         DatabaseHelper dh = DatabaseHelper.getInstance(getServletContext());
         Login login = CommonHelper.getLoginBean(request);
         if (!login.isLogined()) {
@@ -100,6 +108,17 @@ public class HelpMine extends HttpServlet {
             return;
         }
         final String account = login.getAccount();
+
+        if (action != null && action.equals("showGroup")) {
+            String gidText = request.getParameter("groupID");
+            long gid = Long.parseLong(gidText);
+            Group group = CommonHelper.getGroupFromDB(request, response, dh, account, gid);
+            request.setAttribute("group", group);
+            request.getRequestDispatcher("group.jsp").forward(request, response);
+            return;
+        }
+
+
 
 
         PersonalInfo pi = CommonHelper.getUserInfo(dh, account);
@@ -142,7 +161,6 @@ public class HelpMine extends HttpServlet {
                 return null;
             }
         }));
-
 
 
         request.getRequestDispatcher("mine.jsp").forward(request, response);
