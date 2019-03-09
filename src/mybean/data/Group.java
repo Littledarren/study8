@@ -2,42 +2,32 @@
 package mybean.data;
 
 public class Group {
-    private String groupName, groupID; //group名字与ID
-    private String myName; //我在本group中的备注名
-    private String noticeContent; //公告ID与题目
-    private Post[] posts = new Post[3];
+    //group名字与ID
+    private long gid;
+    private String gname;
 
-    {
-        posts[0] = new Post();
-        posts[1] = new Post();
-        posts[2] = new Post();
-    }
+    //    private String myName; //我在本group中的备注名 //forbid
+    private String noticeContent; //公告ID与题目
+
+    private Post[] posts;
 
     String[] memberIDs, memberNames;  //group成员
     boolean isAdmin = false; //是否为管理员
 
-    public String getGroupName() {
-        return groupName;
+    public long getGid() {
+        return gid;
     }
 
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
+    public void setGid(long gid) {
+        this.gid = gid;
     }
 
-    public String getGroupID() {
-        return groupID;
+    public String getGname() {
+        return gname;
     }
 
-    public void setGroupID(String groupID) {
-        this.groupID = groupID;
-    }
-
-    public String getMyName() {
-        return myName;
-    }
-
-    public void setMyName(String myName) {
-        this.myName = myName;
+    public void setGname(String gname) {
+        this.gname = gname;
     }
 
     public String getNoticeContent() {
@@ -46,6 +36,14 @@ public class Group {
 
     public void setNoticeContent(String noticeContent) {
         this.noticeContent = noticeContent;
+    }
+
+    public Post[] getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Post[] posts) {
+        this.posts = posts;
     }
 
     public String[] getMemberIDs() {
@@ -62,14 +60,6 @@ public class Group {
 
     public void setMemberNames(String[] memberNames) {
         this.memberNames = memberNames;
-    }
-
-    public Post[] getPosts() {
-        return posts;
-    }
-
-    public void setPosts(Post[] posts) {
-        this.posts = posts;
     }
 
     public boolean isAdmin() {

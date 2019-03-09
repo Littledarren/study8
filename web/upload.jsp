@@ -22,11 +22,13 @@
                                     <b class=\"caret\"></b>\
                                 </a>\
                                 <ul class=\"dropdown-menu\">\
-                                    <% for (i = 0; i < personalInfo.getGroupNames().length; i++) { %>\
+                                    <% int i;
+                                    Group[] groups = personalInfo.getGroups();
+                                    for (i = 0; i < groups.length; i++) { %>\
                                     <li>\
                                         <div class=\"checkbox\"><label>\
                                             <input type=\"checkbox\" name=\"share_group\" value=\"<%= personalInfo.getGroupIDs()[i]%>\">\
-                                            <%= personalInfo.getGroupNames()[i] %>\
+                                            <%= groups[i].getGname() %>\
                                         </label></div>\
                                     </li>\
                                     <% } %>\

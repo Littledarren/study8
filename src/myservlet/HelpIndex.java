@@ -92,7 +92,7 @@ public class HelpIndex extends HttpServlet {
 
                     ps.setInt(1, postNum - 5);
                     ps.setInt(2, 5);
-                    getPostsFromSQLstatement(arrayList, ps);
+                    CommonHelper.getPostsFromSQLstatement(arrayList, ps);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -118,7 +118,7 @@ public class HelpIndex extends HttpServlet {
                     ps.setString(1, mail);
                     ps.setInt(2, postNum - 5);
                     ps.setInt(3, 5);
-                    getPostsFromSQLstatement(arrayList, ps);
+                    CommonHelper.getPostsFromSQLstatement(arrayList, ps);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -136,7 +136,7 @@ public class HelpIndex extends HttpServlet {
                     ps.setShort(1, postType);
                     ps.setInt(2, postNum - 5);
                     ps.setInt(3, 5);
-                    getPostsFromSQLstatement(arrayList, ps);
+                    CommonHelper.getPostsFromSQLstatement(arrayList, ps);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -152,26 +152,6 @@ public class HelpIndex extends HttpServlet {
         req.getRequestDispatcher("/index.jsp").forward(req, resp);
     }
 
-    private void getPostsFromSQLstatement(ArrayList<Post> arrayList, PreparedStatement ps) throws SQLException {
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            Post post = new Post();
-            post.setID(rs.getLong(1));
-            post.setMail(rs.getString(2));
-            post.setTitle(rs.getString(3));
-            post.setContent(rs.getString(4)); // actual url
-            post.setPost_timestamp(rs.getTimestamp(5));
-            post.setPredefined_classification(rs.getShort(6));
-            post.setType(rs.getShort(7));
-            post.setShare_type(rs.getShort(8));
-            post.setNumReads(rs.getInt(9));
-            post.setNumLikes(rs.getInt(10));
-            post.setNumComments(rs.getInt(11));
-            post.setNumFavorites(rs.getInt(12));
-            post.setAuthor(rs.getString(13));
-            arrayList.add(post);
-        }
-    }
 
 
     @Override
@@ -191,7 +171,7 @@ public class HelpIndex extends HttpServlet {
                         "order by 0.1 * numReads + 5 * numLikes + numComments + 10 * numFavourites DESC, post_id "
                 );
                 ps.setString(1, "%" + title + "%");
-                getPostsFromSQLstatement(arrayList, ps);
+                CommonHelper.getPostsFromSQLstatement(arrayList, ps);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -205,7 +185,7 @@ public class HelpIndex extends HttpServlet {
         index.setPosts(posts);
         Login login = CommonHelper.getLoginBean(req);
         getMessagesFromDatabase(databaseHelper, index, login);
-
+        req.getRequestDispatcher("/index.jsp").forward(req, resp);
 
     }
 

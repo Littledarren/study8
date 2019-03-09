@@ -2,7 +2,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <jsp:useBean id="login" type="mybean.data.Login" scope="session" />
 
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default" role="navigation" style="height:20px">
 	<div class="container-fluid"><div>
         <ul class="nav navbar-nav">
             <li class="dropdown">
@@ -32,7 +32,7 @@
             <% } %>
 
             <li>
-                <form class="form-inline" role="form" style="margin-top:1%;margin-left:550px" action="/handleIndex" method="POST">
+                <form class="form-inline" role="form" style="margin-top:1%;margin-left:550px" action="handleIndex" method="POST">
                     <div class="form-group">
                         <label class="sr-only" for="title">搜索</label>
                         <input type="text" class="form-control" id="title" name="title" placeholder="搜索博文名" style="display:inline-block">
@@ -44,8 +44,8 @@
                 <li><a href="login.jsp" style="margin-left:50px">登陆</a></li>
             <% }else { %>
                 <li>
-                    <%=login.getNickname()+" "%>
-                    <a href="handleLogin"> 退出</a>
+                    <scan style="color:#00FF00;top:50%;margin-bottom:-5px;"><%=login.getNickname()+" "%></scan>
+                    <scan><a href="handleLogin" style="margin-left:50px;top:50%;margin-bottom:-5px;"> 退出</a></scan>
                 </li>
             <% } %>
         </ul>

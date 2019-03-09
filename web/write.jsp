@@ -1,3 +1,4 @@
+<%@ page import="mybean.data.Group" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <jsp:useBean id="personalInfo" class="mybean.data.PersonalInfo" scope="request"/>
 
@@ -22,13 +23,14 @@
                                     <b class=\"caret\"></b>\
                                 </a>\
                                 <ul class=\"dropdown-menu\">\
-                                    <%\
-                                    int i;\
-                                    for (i = 0; i < personalInfo.getGroupNames().length; i++) { %>\
+                                    <%
+                                    int i;
+                                    Group[] groups = personalInfo.getGroups();
+                                    for (i = 0; i < groups.length; i++) { %>\
                                     <li>\
                                         <div class=\"checkbox\"><label>\
-                                            <input type=\"checkbox\" name=\"share_group\" value=\"<%= personalInfo.getGroupIDs()[i]%>\">\
-                                            <%= personalInfo.getGroupNames()[i] %>\
+                                            <input type=\"checkbox\" name=\"share_group\" value=\"<%= groups[i].getGid() %>\">\
+                                            <%= groups[i].getGname() %>\
                                         </label></div>\
                                     </li>\
                                     <% } %>\
@@ -174,39 +176,13 @@
                         </a>
                         <ul class="dropdown-menu">
                             <%
-                                for
-                                (
-                                i
-                                =
-                                0
-                                ;
-                                i
-                                <
-                                personalInfo
-                                .
-                                getClasses
-                                (
-                                )
-                                .
-                                length
-                                ;
-                                i
-                                ++
-                                )
-                                { %>
+                                for (i = 0; i < personalInfo.getClasses().length; i++) { %>
                             <li>
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" name="self_classification"
                                                value="<%=personalInfo.getClasses()[i]%>">
-                                        <%=personalInfo
-                                            .
-                                            getClasses
-                                            (
-                                            )
-                                            [
-                                            i
-                                            ]%>
+                                        <%=personalInfo.getClasses()[i]%>
                                     </label>
                                 </div>
                             </li>

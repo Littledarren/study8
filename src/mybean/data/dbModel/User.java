@@ -1,14 +1,14 @@
 package mybean.data.dbModel;
 
 public class User {
-    private String mail;
-    private String password;
-    private String uname;
-    private String sex;
-    private String college;
-    private String profession;
-    private String profile_photo;
-    private long points;
+    private String mail = "test";
+    private String password = "teset";
+    private String uname = "test";
+    private String sex = "test";
+    private String college = "test ";
+    private String profession = "test";
+    private String profile_photo = "test";
+    private long points = 0;
 
     public String getMail() {
         return mail;

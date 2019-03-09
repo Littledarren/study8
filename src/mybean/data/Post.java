@@ -8,11 +8,13 @@ public class Post {
     private String title = "testTitle";
     private String content = "test";
     private Timestamp post_timestamp;
-    private short predefined_classification;
-    private short type;
-    private short share_type;
+    private short predefined_classification = 7;
+    private short type = 1;
+    private short share_type = 1;
     private int numReads = 0, numLikes = 0, numComments = 0, numFavorites = 0;
     private String author = "testAuthor";
+
+    private Comment[] comments = new Comment[0];
 
 
 
@@ -64,13 +66,11 @@ public class Post {
         this.share_type = share_type;
     }
 
-    private String[] comments;
-
-    public String[] getComments() {
+    public Comment[] getComments() {
         return comments;
     }
 
-    public void setComments(String[] comments) {
+    public void setComments(Comment[] comments) {
         this.comments = comments;
     }
 

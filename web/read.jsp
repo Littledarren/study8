@@ -1,4 +1,6 @@
+<%@ page import="mybean.data.Comment" %>
 <%@ page import="mybean.data.Post" %>
+<%@ page import="mybean.data.dbModel.User" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <jsp:useBean id="personalInfo" type="mybean.data.PersonalInfo" scope="request"/>
 <jsp:useBean id="post" type="mybean.data.Post" scope="request"/>
@@ -16,28 +18,31 @@
 <body style="background-color:#00FF00">
 <div class="container">
     <div class="row">
-        <div class="col-md-3 offset-md-1" style="height:500px;background-color:#FFFFFF;border:3px solid #00FF00;">
+        <div class="col-md-3 offset-md-1" style="min-height:600px;background-color:#FFFFFF;border:3px solid #00FF00;">
             <!--博主信息-->
-            <img src="<%= personalInfo.getProfile_photo() %>" class="img-circle" style="width:80;height:80px;">
+            <%
+                User user = personalInfo.getUser();
+            %>
+            <img src="<%= user.getProfile_photo() %>" class="img-circle" style="width:80;height:80px;">
             <a href="handleRead?type=attention" class="btn btn-default"> 关注</a>
             <div style="height:270px;background-color:#FFFFFF;border-bottom:2px solid #00FF00;">
                 <p>昵称：
-                    <%= personalInfo.getNickname() %>
+                    <%= user.getUname() %>
                 </p>
                 <p>性别：
-                    <%= personalInfo.getSex() %>
+                    <%= user.getSex() %>
                 </p>
                 <p>高校：
-                    <%= personalInfo.getUniversity() %>
+                    <%= user.getCollege() %>
                 </p>
                 <p>专业：
-                    <%= personalInfo.getMajor() %>
+                    <%= user.getProfession() %>
                 </p>
                 <p>积分：
-                    <%= personalInfo.getScore() %>
+                    <%= user.getPoints() %>
                 </p>
                 <p>排名：
-                    <%= personalInfo.getRank() %>
+                    <%= 1 %>
                 </p>
                 <table class="table">
                     <thead>
@@ -88,7 +93,7 @@
         </div>
 
 
-        <div class="col-md-8" style="height:500px;background-color:#FFFFFF;border:3px solid #00FF00;">
+        <div class="col-md-8" style="min-height:600px;background-color:#FFFFFF;border:3px solid #00FF00;">
             <!--文章内容-->
             <div>
                 <h3><%= post.getTitle() %>
@@ -102,7 +107,7 @@
             <div>
                 <form role="form" action="handleRead" method="POST">
                     <div class="form-group">
-                        <label class="sr-only" for="name">comment</label>
+                        <label class="sr-only" for="title">comment</label>
                         <input type="text" class="form-control" id="title" placeholder="发表评论">
                     </div>
                     <button type="submit" class="btn btn-default">发表</button>
@@ -110,12 +115,14 @@
             </div>
             <!--Read comments-->
             <div>
-                Comment[] comments = post.getComments();
-                <% for (i = 0; i < comments.length; i++) { %>
+
+                <%
+                    Comment[] comments = post.getComments();
+                    for (i = 0; i < comments.length; i++) { %>
                 <p><%= comments[i].getAuthor() %>
                 </p>
-                <% if (comments[i].authorRepliedTo != null) { %>
-                <p>回复<%= comments[i].getAuthorRepliedTo() + ": " + comments[i].getContentRepliedTo() %>
+                <% if (comments[i].getReply_id() != -1) { %>
+                <p>回复<%= comments[i].getAuthor() + ": " + comments[i].getComment_content() %>
                 </p>
                 <% } %>
                 <p>comments[i].getContent()</p>
@@ -145,13 +152,11 @@
 
 
         <!--一些按钮-->
-        <div class="col-md-1" style="height:200px;background-color:#FFFFFF;border:3px solid #00FF00;">
+        <div class="col-md-1" style="height:200px;background-color:#00FF00;border:3px solid #00FF00;">
             <div class="btn-group-vertical">
-                <a class="btn" href="handleRead?postID=<%= posts[i].getID() %>&type=like">点赞</a><br/>
-                <a class="btn" href="handleRead?postID=<%= posts[i].getID() %>&type=collect">收藏</a><br/>
-                <a class="btn" href="handleRead?postID=<%= posts[i].getID() %>&type=comment">评论</a><br/>
-                <a class="btn" href="handleRead?postID=<%= posts[i].getID() %>&type=previous">上一篇</a><br/>
-                <a class="btn" href="handleRead?postID=<%= posts[i].getID() %>&type=next">下一篇</a><br/>
+                <a class="btn btn-default" href="handleRead?postID=<%= post.getID() %>&type=like">点赞</a>
+                <a class="btn btn-default" href="handleRead?postID=<%= post.getID() %>&type=collect">收藏</a>
+                <a class="btn btn-default" href="handleRead?postID=<%= post.getID() %>&type=comment">评论</a>
             </div>
         </div>
     </div>

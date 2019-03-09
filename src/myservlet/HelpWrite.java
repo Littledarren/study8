@@ -1,5 +1,6 @@
 package myservlet;
 
+import mybean.data.Group;
 import mybean.data.Login;
 import mybean.data.PersonalInfo;
 import myutil.CommonHelper;
@@ -182,14 +183,13 @@ public class HelpWrite extends HttpServlet {
                 PreparedStatement ps = con.prepareStatement("select gid, gname from sgroup natural join user_in_group where mail=?");
                 ps.setString(1, account);
                 ResultSet resultSet = ps.executeQuery();
-                ArrayList<String> groupIDs = new ArrayList<>();
-                ArrayList<String> groupNames = new ArrayList<>();
+                ArrayList<Group> groups = new ArrayList<>();
                 while (resultSet.next()) {
-                    groupIDs.add(resultSet.getString(1));
-                    groupNames.add(resultSet.getString(2));
+                    Group group = new Group();
+                    group.setGid(resultSet.getLong(1));
+                    group.setGname(resultSet.getString(2));
                 }
-                pi.setGroupIDs(groupIDs.toArray(new String[groupIDs.size()]));
-                pi.setGroupNames(groupNames.toArray(new String[groupNames.size()]));
+                pi.setGroups(groups.toArray(new Group[0]));
 
                 ps = con.prepareStatement("select scname from self_classification natural join user where mail=?");
                 ps.setString(1, account);
@@ -199,7 +199,7 @@ public class HelpWrite extends HttpServlet {
                 while (resultSet.next()) {
                     classes.add(resultSet.getString(1));
                 }
-                pi.setClasses(classes.toArray(new String[classes.size()]));
+                pi.setClasses(classes.toArray(new String[0]));
                 return pi;
             } catch (SQLException e) {
                 e.printStackTrace();

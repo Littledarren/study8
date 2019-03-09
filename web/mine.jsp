@@ -1,3 +1,5 @@
+<%@ page import="mybean.data.Group" %>
+<%@ page import="mybean.data.dbModel.User" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <jsp:useBean id="personalInfo" type="mybean.data.PersonalInfo" scope="request"/>
 <%! int i; %>
@@ -21,7 +23,9 @@
             <div style="height:150px;background-color:#FFFFFF;border-bottom:2px solid #00FF00;">
                 <h3>个人分类</h3>
                 <ul>
-                    <% for (i = 0; i < personalInfo.getClasses().length; i++) { %>
+                    <%
+                        User user = personalInfo.getUser();
+                        for (i = 0; i < personalInfo.getClasses().length; i++) { %>
                     <li>
                         <a href="handleMine?class=<%= personalInfo.getClasses()[i] %>">
                             <%= personalInfo.getClasses()[i] %>
@@ -44,10 +48,12 @@
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <% for (i = 0; i < personalInfo.getGroupNames().length; i++) { %>
+                            <%
+                                Group[] groups = personalInfo.getGroups();
+                                for (i = 0; i < groups.length; i++) { %>
                             <li>
-                                <a href="handleGroup?groupID=<%= personalInfo.getGroupIDs()[i] %>">
-                                    <%= personalInfo.getGroupNames()[i] %>
+                                <a href="handleGroup?groupID=<%= groups[i].getGid() %>">
+                                    <%= groups[i].getGname() %>
                                 </a>
                             </li>
                             <% } %>
@@ -60,17 +66,17 @@
         <div class="col-md-9" style="height:550px;background-color:#FFFFFF;border:3px solid #00FF00;">
             <!--昵称-->
             <p align="center" style="font-size:30px">
-                <jsp:getProperty name="personalInfo" property="nickname"/>
+                <%= user.getUname() %>
             </p>
             <!--头像-->
             <img src="image/dog.jpg" class="img-circle" style="width:auto;height:200px;margin-left:28%">
             <br/><br/>
             <!--一些数据-->
             <p align="center" style="font-size:15px">积分：
-                <jsp:getProperty name="personalInfo" property="score"/>
+                <%= user.getPoints() %>
             </p>
             <p align="center" style="font-size:15px">排名：
-                <jsp:getProperty name="personalInfo" property="rank"/>
+                1
             </p>
             <table class="table">
                 <thead>

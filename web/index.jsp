@@ -20,7 +20,7 @@
 <body style="background-color:#00FF00">
 <div class="container">
     <div class="row">
-        <div class="col-md-2" style="background-color:#FFFFFF;min-height:600px;float:left;margin-left:1%">
+        <div class="col-md-2" style="background-color:#FFFFFF;min-height:600px;float:left;<%--margin-left:1%--%>">
 
             <!--消息-->
             <h3>消息</h3>
@@ -54,7 +54,7 @@
 
 
         <!--博文-->
-        <div class="col-md-10" style="background-color:#FFFFFF;min-height:600px;float:right;margin-right:1%">
+        <div class="col-md-10" style="background-color:#FFFFFF;min-height:600px;float:right;">
             <h3>博文</h3>
             <ul>
                 <%
@@ -66,9 +66,12 @@
                         <%= posts[i].getTitle()%>
                     </a><br>
                     <p style="font-size:15px;color:#707070">
-                        作者：<%= posts[i].getAuthor() + "  " %>
-                        阅读量：<%= posts[i].getNumReads() + "  " %>
-                        <%= posts[i].getPost_timestamp() %>
+                        <scan>作者：<%= posts[i].getAuthor() + "  " %>
+                        </scan>
+                        <scan>阅读量：<%= posts[i].getNumReads() + "  " %>
+                        </scan>
+                        <scan><%= posts[i].getPost_timestamp() %>
+                        </scan>
                     </p>
                 </li>
                 <% } %>

@@ -1,18 +1,73 @@
 package mybean.data;
 
-public class Comment {
-    private String ID;
-    private String author;
-    private String content;
-    private String authorRepliedTo = null;
-    private String contentRepliedTo;
+import java.sql.Timestamp;
 
-    public String getID() {
+public class Comment {
+    private long ID = -1;
+    private long post_id = -1;
+    private String mail;
+    private String comment_content;
+    private Timestamp comment_timestamp;
+    private long reply_id;
+    private String reply_author;
+
+    private String author;
+
+
+    public String getReply_author() {
+        return reply_author;
+    }
+
+    public void setReply_author(String reply_author) {
+        this.reply_author = reply_author;
+    }
+
+    public long getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(long ID) {
         this.ID = ID;
+    }
+
+    public long getPost_id() {
+        return post_id;
+    }
+
+    public void setPost_id(long post_id) {
+        this.post_id = post_id;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public String getComment_content() {
+        return comment_content;
+    }
+
+    public void setComment_content(String comment_content) {
+        this.comment_content = comment_content;
+    }
+
+    public Timestamp getComment_timestamp() {
+        return comment_timestamp;
+    }
+
+    public void setComment_timestamp(Timestamp comment_timestamp) {
+        this.comment_timestamp = comment_timestamp;
+    }
+
+    public long getReply_id() {
+        return reply_id;
+    }
+
+    public void setReply_id(long reply_id) {
+        this.reply_id = reply_id;
     }
 
     public String getAuthor() {
@@ -21,29 +76,5 @@ public class Comment {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getAuthorRepliedTo() {
-        return authorRepliedTo;
-    }
-
-    public void setAuthorRepliedTo(String authorRepliedTo) {
-        this.authorRepliedTo = authorRepliedTo;
-    }
-
-    public String getContentRepliedTo() {
-        return contentRepliedTo;
-    }
-
-    public void setContentRepliedTo(String contentRepliedTo) {
-        this.contentRepliedTo = contentRepliedTo;
     }
 }

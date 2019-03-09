@@ -6,13 +6,13 @@ import mybean.data.dbModel.User;
 
 public class PersonalInfo {
 
-    User user;
+    User user = new User();
 
-    Post[] posts; //个人发布的博文的ID与题目
+    Post[] posts = new Post[0]; //个人发布的博文的ID与题目
 
     int numArticles = 0, numFans = 0, numLikes = 0, numComments = 0, numReads = 0;
 
-    Group[] groups;
+    Group[] groups = new Group[0];
     String[] classes = {"test"}; //个人分类
 
     String backNews;
