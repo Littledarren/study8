@@ -16,6 +16,7 @@ import java.sql.SQLException;
 public class HelpLogin extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //if success ->index.jsp
+        request.setCharacterEncoding("utf8");
         String email = request.getParameter("account");
         String password = request.getParameter("password");
         DatabaseHelper dh = DatabaseHelper.getInstance(getServletContext());

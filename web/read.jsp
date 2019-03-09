@@ -98,17 +98,24 @@
             <div>
                 <h3><%= post.getTitle() %>
                 </h3>
-                <p><%= post.getNumReads() + " " + post.getNumLikes() + " " + post.getNumComments()%>
-                </p>
-                <p><%= post.getContent() %>
+                <p style="float:right;color:#777777">
+                    <%= "阅读量:" + post.getNumReads() + "  点赞量:" + post.getNumLikes() + "  评论量:" + post.getNumComments()%>
+                </p><br/>
+                <hr/>
+                <p>
+                    <%
+                        String content = post.getContent();
+                        out.println(content.replaceAll("\n", "<br/>").replaceAll(" ", "&nbsp;"));
+                    %>
                 </p>
             </div>
+            <br/>
             <!--Write comments-->
             <div>
                 <form role="form" action="handleRead" method="POST">
                     <div class="form-group">
                         <label class="sr-only" for="title">comment</label>
-                        <input type="text" class="form-control" id="title" placeholder="发表评论">
+                        <input type="text" class="form-control" id="title" placeholder="评论">
                     </div>
                     <button type="submit" class="btn btn-default">发表</button>
                 </form>

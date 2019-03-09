@@ -52,7 +52,8 @@
                                         <input type="text" class="form-control" id="groupname" name="create"
                                                placeholder="输入group名" style="display:inline-block">
                                     </div>
-                                    <button type="submit" class="btn btn-default" style="display:inline-block;">OK
+                                    <button type="submit" name="submit" value="create" class="btn btn-default"
+                                            style="display:inline-block;">OK
                                     </button>
                                 </form>
                             </li>
@@ -72,7 +73,8 @@
                                         <input type="text" class="form-control" id="groupID" name="join"
                                                placeholder="输入group ID" style="display:inline-block">
                                     </div>
-                                    <button type="submit" class="btn btn-default" style="display:inline-block">OK
+                                    <button type="submit" name="submit" value="join" class="btn btn-default"
+                                            style="display:inline-block">OK
                                     </button>
                                 </form>
                             </li>
@@ -101,20 +103,22 @@
         </div>
 
         <div class="col-md-9" style="height:550px;background-color:#FFFFFF;border:3px solid #00FF00;">
-            <!--昵称-->
-            <p align="center" style="font-size:30px">
-                <%= user.getUname() %>
-            </p>
-            <!--头像-->
-            <img src="image/dog.jpg" class="img-circle" style="width:auto;height:200px;margin-left:28%">
-            <br/><br/>
-            <!--一些数据-->
-            <p align="center" style="font-size:15px">积分：
-                <%= user.getPoints() %>
-            </p>
-            <p align="center" style="font-size:15px">排名：
-                1
-            </p>
+            <div style="text-align:center;">
+                <!--昵称-->
+                <p style="font-size:30px">
+                    <%= user.getUname() %>
+                </p>
+                <!--头像-->
+                <img src="<%= user.getProfile_photo()%>" class="img-circle" style="width:auto;height:200px">
+                <br/><br/>
+                <!--一些数据-->
+                <p style="font-size:15px">积分：
+                    <%= user.getPoints() %>
+                </p>
+                <p style="font-size:15px">排名：
+                    1
+                </p>
+            </div>
             <table class="table">
                 <thead>
                 <tr>

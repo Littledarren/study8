@@ -7,7 +7,7 @@ public class User {
     private String sex = "test";
     private String college = "test ";
     private String profession = "test";
-    private String profile_photo = "test";
+    private String profile_photo = "images/default.jpg";
     private long points = 0;
 
     public String getMail() {

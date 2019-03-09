@@ -153,37 +153,37 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <div class="radio"><label>
-                                    <input type="radio" name="predefined" value="1" checked>论坛
+                                    <input type="radio" name="predefined" value="1" checked="checked">论坛
                                 </label></div>
                             </li>
                             <li>
                                 <div class="radio"><label>
-                                    <input type="radio" name="predefined" value="2" checked>知识理论
+                                    <input type="radio" name="predefined" value="2">知识理论
                                 </label></div>
                             </li>
                             <li>
                                 <div class="radio"><label>
-                                    <input type="radio" name="predefined" value="3" checked>经验分享
+                                    <input type="radio" name="predefined" value="3">经验分享
                                 </label></div>
                             </li>
                             <li>
                                 <div class="radio"><label>
-                                    <input type="radio" name="predefined" value="4" checked>资源分享
+                                    <input type="radio" name="predefined" value="4">资源分享
                                 </label></div>
                             </li>
                             <li>
                                 <div class="radio"><label>
-                                    <input type="radio" name="predefined" value="5" checked>考研
+                                    <input type="radio" name="predefined" value="5">考研
                                 </label></div>
                             </li>
                             <li>
                                 <div class="radio"><label>
-                                    <input type="radio" name="predefined" value="6" checked>就业
+                                    <input type="radio" name="predefined" value="6">就业
                                 </label></div>
                             </li>
                             <li>
                                 <div class="radio"><label>
-                                    <input type="radio" name="predefined" value="7" checked>其他
+                                    <input type="radio" name="predefined" value="7">其他
                                 </label></div>
                             </li>
                         </ul>
@@ -215,19 +215,20 @@
                         <a class="btn btn-default" onclick="shInGroups()">选择groups</a>
                         <li class="dropdown" style="display:inline-block">
 
-                            <a href="handle" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 公开/私密
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
                                     <div class="radio"><label>
-                                        <input type="radio" name="private_switch" id="public" value="0" checked>公开
+                                        <input type="radio" name="private_switch" id="public" value="0"
+                                               checked="checked">公开
                                     </label></div>
                                 </li>
                                 <li>
                                     <div class="radio"><label>
-                                        <input type="radio" name="private_switch" id="private" value="1" checked>私密
+                                        <input type="radio" name="private_switch" id="private" value="1">私密
                                     </label></div>
                                 </li>
                             </ul>

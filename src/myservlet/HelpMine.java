@@ -10,14 +10,14 @@ import java.io.IOException;
 
 public class HelpMine extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String submit = request.getParameter("submit");
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //pernal info
         PersonalInfo personalInfo = new PersonalInfo();
         request.setAttribute("personalInfo", personalInfo);
 
         request.getRequestDispatcher("mine.jsp").forward(request, response);
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        this.doPost(request, response);
     }
 }
