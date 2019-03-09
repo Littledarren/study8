@@ -2,6 +2,7 @@ package myservlet;
 
 import mybean.data.Comment;
 import mybean.data.Login;
+import mybean.data.PersonalInfo;
 import mybean.data.Post;
 import myutil.CommonHelper;
 import myutil.DatabaseHelper;
@@ -176,7 +177,7 @@ public class HelpRead extends HttpServlet {
 
         final String post_mail = post.getMail();
 
-        HelpMine.getNums(dh, post_mail);
+        PersonalInfo pi = CommonHelper.getUserInfo(dh, post_mail);
         Post[] posts = (Post[]) dh.execSql(con -> {
             try {
                 PreparedStatement ps = con.prepareStatement("select * from post where mail=? and share_type=0");
@@ -191,63 +192,8 @@ public class HelpRead extends HttpServlet {
 
         });
         pi.setPosts(posts);
-        pi.setNumArticles((Integer) dh.execSql(con -> {
-            try {
-                PreparedStatement ps = con.prepareStatement("select count(post_id) from post where mail=? and share_type=0");
-                return CommonHelper.getNum(post_mail, ps);
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return 0;
-            }
-
-        }));
-
-        pi.setNumComments((Integer) dh.execSql(con -> {
-            try {
-                PreparedStatement ps = con.prepareStatement("select count(cid) from comment where mail=? ");
-                return CommonHelper.getNum(post_mail, ps);
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return 0;
-            }
-
-        }));
-
-        pi.setNumFans((Integer) dh.execSql(con -> {
-            try {
-                PreparedStatement ps = con.prepareStatement("select count(use_mail) from user_watch_user where mail=?");
-                return CommonHelper.getNum(post_mail, ps);
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return 0;
-            }
-
-        }));
-
-        pi.setNumLikes((Integer) dh.execSql(con -> {
-            try {
-                PreparedStatement ps = con.prepareStatement("select sum(numLikes) from post where mail=?");
-                return CommonHelper.getNum(post_mail, ps);
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return 0;
-            }
-
-        }));
-
-        pi.setNumReads((Integer) dh.execSql(con -> {
-            PreparedStatement ps = null;
-            try {
-                ps = con.prepareStatement("select sum(numReads) from post where mail=?");
-                return CommonHelper.getNum(post_mail, ps);
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return 0;
-            }
-        }));
-
         request.setAttribute("personalInfo", pi);
+        CommonHelper.getNums(request, dh, post_mail, pi);
         request.setAttribute("post", post);
         request.getRequestDispatcher("read.jsp").forward(request, response);
     }
