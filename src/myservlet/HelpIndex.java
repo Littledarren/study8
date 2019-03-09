@@ -21,38 +21,32 @@ import java.util.HashMap;
 
 
 public class HelpIndex extends HttpServlet {
-    final private HashMap<String, Short> predefined = new HashMap<>() {{
-        put("forum", (short) 1);
-        put("knowledge", (short) 2);
-        put("experience", (short) 3);
-        put("resource", (short) 4);
-        put("postgraduate", (short) 5);
-        put("work", (short) 6);
-        put("others", (short) 7);
-        //special tags
-        put("recommend", (short) 8);
-        put("focus", (short) 9);
+    private static final HashMap<String, Short> predefined;
 
-    }};
+    static {
+        predefined = new HashMap<>();
+        predefined.put("forum", (short) 1);
+        predefined.put("knowledge", (short) 2);
+        predefined.put("experience", (short) 3);
+        predefined.put("resource", (short) 4);
+        predefined.put("postgraduate", (short) 5);
+        predefined.put("work", (short) 6);
+        predefined.put("others", (short) 7);
+        //special tags
+        predefined.put("recommend", (short) 8);
+        predefined.put("focus", (short) 9);
+    }
 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /* TODO
-
-            judge parameter type
-
-            judge isLogined
-            if notLogined
-                query posts
-            if Logined
-                query msg
-                query posts with certain type
-                    title author read_count
-                    order by read_count
-             -> index.jsp
-
+        /*
+                1. get some data from Helper
+                2. get predefined_classification
+                3. set bean
          */
+
+
         //1.get some data from Helper
         Login login = CommonHelper.getLoginBean(req);
         DatabaseHelper databaseHelper = DatabaseHelper.getInstance(getServletContext());
@@ -76,8 +70,6 @@ public class HelpIndex extends HttpServlet {
 
         //3.set bean
         Index index = new Index();
-        req.setAttribute("index", index);
-
         Post[] posts = null;
         if (postType == 8) {
             //recommended
@@ -143,15 +135,13 @@ public class HelpIndex extends HttpServlet {
                 return arrayList.toArray(new Post[0]);
             });
         }
-
         index.setPosts(posts);
         index.setPostType(postType);
         getMessagesFromDatabase(databaseHelper, index, login);
 
-
-        req.getRequestDispatcher("/index.jsp").forward(req, resp);
+        req.setAttribute("index", index);
+        req.getRequestDispatcher("index.jsp").forward(req, resp);
     }
-
 
 
     @Override
