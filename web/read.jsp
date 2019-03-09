@@ -115,7 +115,8 @@
                 <form role="form" action="handleRead" method="POST">
                     <div class="form-group">
                         <label class="sr-only" for="title">comment</label>
-                        <input type="text" class="form-control" id="title" placeholder="评论">
+                        <input type="text" name="comment" class="form-control" id="title" placeholder="评论">
+                        <input type="hidden" name="postID" value="<%= post.getID()%>"/>
                     </div>
                     <button type="submit" class="btn btn-default">发表</button>
                 </form>
@@ -128,31 +129,37 @@
                     for (i = 0; i < comments.length; i++) { %>
                 <p><%= comments[i].getAuthor() %>
                 </p>
-                <% if (comments[i].getReply_id() != -1) { %>
-                <p>回复<%= comments[i].getAuthor() + ": " + comments[i].getComment_content() %>
+                <% if (comments[i].getReply_id() != -1) {
+                    for (Comment comment : comments) {
+                        if (comment.getID() == comments[i].getReply_id()) { %>
+                <p>回复<%= comment.getAuthor() + ": " + comment.getComment_content() %>
                 </p>
-                <% } %>
-                <p>comments[i].getContent()</p>
+                <% break;
+                }
+                }%>
+                <p><%= comments[i].getComment_content() %>
+                </p>
+                <% }%>
                 <script>
                     function inputReply() {
-                        x = document.getElementById("reply");  // 找到元素
-                        x.innerHTML = "<form id=\"cancel\" role=\"form\" action=\"handleRead\" method=\"POST\">\n" +
+                        var x = document.getElementById("reply<%= i %>");  // 找到元素
+                        x.innerHTML = "<form id=\"cancel<%= i %>\" role=\"form\" action=\"handleRead\" method=\"POST\">\n" +
                             "                    <div class=\"form-group\">\n" +
                             "                        <label class=\"sr-only\" for=\"name\">reply</label>\n" +
-                            "                        <input type=\"text\" class=\"form-control\" name=\"replyContent\" placeholder=\"回复\"/>\n" +
-                            "                    </div>\n" +
-                            "        <input type=\"hidden\" class=\"form-control\" name=\"replyTo\" value=\"<%= comments[i].getID() %>\"/>" +
-                            "                    <button type=\"submit\" class=\"btn btn-default\ onclick=\"cancel\" >发表</button>\n" +
-                            "            <button class=\"btn btn-default\" onclick=\"cancel\">取消</button>\n" +
-                            "                </form>";    // 改变内容
+                            "                        <input type=\"text\" class=\"form-control\" id=\"name\" name=\"replyContent\" placeholder=\"回复\"/>\n" +
+                            "                    <input type=\"hidden\" class=\"form-control\" name=\"replyTo\" value=\"<%= comments[i].getID() %>\"/>" +
+                            "                    <input type=\"hidden\" name=\"postID\" value=\"<%= post.getID()%>\" />" +
+                            "                    <button type=\"submit\" class=\"btn btn-default\ onclick=\"cancel()\" >发表</button>\n" +
+                            "                    <button class=\"btn btn-default\" onclick=\"cancel()\">取消</button>\n" +
+                            "                </div></form>";    // 改变内容
                     }
 
                     function cancel() {
-                        x = document.getElementById("cancel");  // 找到元素
-                        x.innerHTML = "<button id=\"reply\" type=\"button\" onclick=\"inputReply()\">回复</button>";
+                        var x = document.getElementById("cancel<%= i %>");  // 找到元素
+                        x.innerHTML = "<span id=\"reply<%= i %>\"><button type=\"button\" onclick=\"inputReply()\">回复</button></span>";
                     }
                 </script>
-                <button id="reply" type="button" onclick="inputReply()">回复</button>
+                <span id="reply<%= i %>"><button type="button" onclick="inputReply()">回复</button></span>
                 <% } %>
             </div>
         </div>

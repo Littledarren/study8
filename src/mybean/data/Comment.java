@@ -8,19 +8,11 @@ public class Comment {
     private String mail;
     private String comment_content;
     private Timestamp comment_timestamp;
+
     private long reply_id;
-    private String reply_author;
 
     private String author;
 
-
-    public String getReply_author() {
-        return reply_author;
-    }
-
-    public void setReply_author(String reply_author) {
-        this.reply_author = reply_author;
-    }
 
     public long getID() {
         return ID;

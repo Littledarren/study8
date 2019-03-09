@@ -45,6 +45,15 @@ public class CommonHelper {
         }
     }
 
+    public static Object getNum(String mail, PreparedStatement ps) throws SQLException {
+        ps.setString(1, mail);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getInt(1);
+        } else {
+            return 0;
+        }
+    }
     public static void getPostFromRS(Post post, ResultSet rs) throws SQLException {
         post.setID(rs.getLong(1));
         post.setMail(rs.getString(2));

@@ -1,6 +1,7 @@
 package myservlet;
 
-import mybean.data.PersonalInfo;
+import mybean.data.Comment;
+import mybean.data.Login;
 import mybean.data.Post;
 import myutil.CommonHelper;
 import myutil.DatabaseHelper;
@@ -18,10 +19,75 @@ import java.nio.file.Paths;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class HelpRead extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        DatabaseHelper dh = DatabaseHelper.getInstance(getServletContext());
+        String mail = CommonHelper.getLoginBean(request).getAccount();
+        if (mail == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
+        long postID = Long.valueOf(request.getParameter("postID"));
+        //simple comment
+        String comment = request.getParameter("comment");
+        //comment on comment
+        String replyContent = request.getParameter("replyContent");
+        long replyTo = -1l;
+        if (replyContent != null) {
+            try {
+                replyTo = Long.parseLong(request.getParameter("replyTo"));
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+        long rt = replyTo;
+
+        if (comment != null) {
+            dh.execSql(con -> {
+                try {
+                    PreparedStatement ps = con.prepareStatement("insert into comment (post_id, mail, comment_content, comment_timestamp) " +
+                            "values (?, ?, ?, ?)");
+                    ps.setLong(1, postID);
+                    ps.setString(2, mail);
+                    ps.setString(3, comment);
+                    ps.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
+                    ps.executeUpdate();
+                    //update post
+                    ps = con.prepareStatement("update post set numComments=numComments+1 where post_id=?");
+                    ps.setLong(1, postID);
+                    ps.executeUpdate();
+                    return null;
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            });
+        } else dh.execSql(con -> {
+            try {
+                PreparedStatement ps = con.prepareStatement("insert into comment (post_id, mail, comment_content, comment_timestamp, reply_id) " +
+                        "values (?, ?, ?, ?, ?)");
+                ps.setLong(1, postID);
+                ps.setString(2, mail);
+                ps.setString(3, replyContent);
+                ps.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
+                ps.setLong(5, rt);
+                ps.executeUpdate();
+                //update post
+                ps = con.prepareStatement("update post set numComments=numComments+1 where post_id=?");
+                ps.setLong(1, postID);
+                ps.executeUpdate();
+                return null;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return null;
+            }
+        });
+
+        this.doGet(request, response);
 
     }
 
@@ -31,6 +97,9 @@ public class HelpRead extends HttpServlet {
 
         //->read.jsp
         long postID = Long.valueOf(request.getParameter("postID"));
+
+        Login login = CommonHelper.getLoginBean(request);
+        final String mail = login.getAccount();
 
         Post post = null;
         DatabaseHelper dh = DatabaseHelper.getInstance(getServletContext());
@@ -42,6 +111,42 @@ public class HelpRead extends HttpServlet {
                 ResultSet rs = ps.executeQuery();
                 rs.next();
                 CommonHelper.getPostFromRS(temp, rs);
+
+                //get comment
+                ps = con.prepareStatement("select cid, mail, uname, comment_content, comment_timestamp, reply_id from comment  natural join user where post_id=? order by comment_timestamp ");
+                ps.setLong(1, postID);
+                rs = ps.executeQuery();
+                ArrayList<Comment> arrayList = new ArrayList<>();
+                while (rs.next()) {
+                    Comment comment = new Comment();
+                    comment.setID(rs.getLong(1));
+                    comment.setMail(rs.getString(2));
+                    comment.setAuthor(rs.getString(3));
+                    comment.setComment_content(rs.getString(4));
+                    comment.setComment_timestamp(rs.getTimestamp(5));
+                    comment.setReply_id(rs.getLong(6));
+                    arrayList.add(comment);
+
+                }
+                temp.setComments(arrayList.toArray(new Comment[0]));
+                //update read info
+                if (mail != null && !mail.equals(temp.getMail())) {
+                    ps = con.prepareStatement("select * from user_read_post where post_id=? and mail=?");
+                    ps.setLong(1, postID);
+                    ps.setString(2, mail);
+                    rs = ps.executeQuery();
+                    if (!rs.next()) {
+                        ps = con.prepareStatement("insert into user_read_post values (?, ?)");
+                        ps.setLong(1, postID);
+                        ps.setString(2, mail);
+                        ps.executeUpdate();
+                        ps = con.prepareStatement("update post set numReads = numReads+1 where post_id=?");
+                        ps.setLong(1, postID);
+                        ps.executeUpdate();
+                    }
+                }
+
+
                 return temp;
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -49,7 +154,12 @@ public class HelpRead extends HttpServlet {
             }
 
         });
+        if (post == null) {
+            response.sendRedirect("/404.jsp");
+            return;
+        }
 
+        //get actual content
         String url = post.getContent();
         Path file = Paths.get(url);
         Charset charset = Charset.forName("utf8");
@@ -64,7 +174,79 @@ public class HelpRead extends HttpServlet {
         }
         post.setContent(sb.toString());
 
-        PersonalInfo pi = new PersonalInfo();
+        final String post_mail = post.getMail();
+
+        HelpMine.getNums(dh, post_mail);
+        Post[] posts = (Post[]) dh.execSql(con -> {
+            try {
+                PreparedStatement ps = con.prepareStatement("select * from post where mail=? and share_type=0");
+                ps.setString(1, post_mail);
+                ArrayList<Post> arrayList = new ArrayList<Post>();
+                CommonHelper.getPostsFromSQLstatement(arrayList, ps);
+                return arrayList.toArray(new Post[0]);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return null;
+            }
+
+        });
+        pi.setPosts(posts);
+        pi.setNumArticles((Integer) dh.execSql(con -> {
+            try {
+                PreparedStatement ps = con.prepareStatement("select count(post_id) from post where mail=? and share_type=0");
+                return CommonHelper.getNum(post_mail, ps);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return 0;
+            }
+
+        }));
+
+        pi.setNumComments((Integer) dh.execSql(con -> {
+            try {
+                PreparedStatement ps = con.prepareStatement("select count(cid) from comment where mail=? ");
+                return CommonHelper.getNum(post_mail, ps);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return 0;
+            }
+
+        }));
+
+        pi.setNumFans((Integer) dh.execSql(con -> {
+            try {
+                PreparedStatement ps = con.prepareStatement("select count(use_mail) from user_watch_user where mail=?");
+                return CommonHelper.getNum(post_mail, ps);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return 0;
+            }
+
+        }));
+
+        pi.setNumLikes((Integer) dh.execSql(con -> {
+            try {
+                PreparedStatement ps = con.prepareStatement("select sum(numLikes) from post where mail=?");
+                return CommonHelper.getNum(post_mail, ps);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return 0;
+            }
+
+        }));
+
+        pi.setNumReads((Integer) dh.execSql(con -> {
+            PreparedStatement ps = null;
+            try {
+                ps = con.prepareStatement("select sum(numReads) from post where mail=?");
+                return CommonHelper.getNum(post_mail, ps);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return 0;
+            }
+        }));
+
         request.setAttribute("personalInfo", pi);
         request.setAttribute("post", post);
         request.getRequestDispatcher("read.jsp").forward(request, response);
