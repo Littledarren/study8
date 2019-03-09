@@ -44,8 +44,10 @@
                 <li><a href="login.jsp" style="margin-left:50px">登陆</a></li>
             <% }else { %>
                 <li>
-                    <scan style="color:#00FF00;top:50%;margin-bottom:-5px;"><%=login.getNickname()+" "%></scan>
-                    <scan><a href="handleLogin" style="margin-left:50px;top:50%;margin-bottom:-5px;"> 退出</a></scan>
+                    <a style="color:#00FF00;top:50%;margin-bottom:-5px;"><%=login.getNickname()+" "%></a>
+                </li>
+                <li>
+                    <a href="handleLogin" style="margin-left:50px;top:50%;margin-bottom:-5px;"> 退出</a>
                 </li>
             <% } %>
         </ul>

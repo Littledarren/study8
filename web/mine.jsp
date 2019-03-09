@@ -39,8 +39,45 @@
             <div style="height:200px;background-color:#FFFFFF">
                 <h3>Group</h3>
                 <ul>
-                    <li><a href="handleMine?value=create">创建group</a></li>
-                    <li><a href="handleMine?value=join">加入group</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            创建group
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu" style="width:250px;height:50px;text-align:center">
+                            <li>
+                                <form class="form-inline" role="form" action="handleMine" method="POST">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="groupname">group名</label>
+                                        <input type="text" class="form-control" id="groupname" name="create"
+                                               placeholder="输入group名" style="display:inline-block">
+                                    </div>
+                                    <button type="submit" class="btn btn-default" style="display:inline-block;">OK
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            加入group
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu" style="width:250px;height:50px;text-align:center">
+                            <li>
+                                <form class="form-inline" role="form" action="handleMine" method="POST">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="groupID">groupID</label>
+                                        <input type="text" class="form-control" id="groupID" name="join"
+                                               placeholder="输入group ID" style="display:inline-block">
+                                    </div>
+                                    <button type="submit" class="btn btn-default" style="display:inline-block">OK
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
                     <!--所在的groups-->
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">

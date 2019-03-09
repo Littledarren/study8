@@ -64,5 +64,12 @@
         <url-pattern>/handleWrite</url-pattern>
     </servlet-mapping>
 
-
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.jpg</url-pattern>
+    </servlet-mapping>
 </web-app>

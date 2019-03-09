@@ -11,23 +11,31 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" TYPE="text/css" href="css/layout.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <%@ include file="nav.txt" %>
+    <style>
 
+    </style>
+    <!-- style="margin-left:50px" -->
+    <!--<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+        <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>-->
 </head>
-<body style="background-color:#00FF00">
+<body>
 <div class="container">
     <div class="row">
-        <div class="col-md-2" style="background-color:#FFFFFF;min-height:600px;float:left;<%--margin-left:1%--%>">
+        <div class="col-md-2" style="background-color:#FFFFFF;min-height:600px;float:left;margin-left:3%">
 
             <!--消息-->
             <h3>消息</h3>
-            <% if (login.isLogined()) { %>
+            <% int i;
+                if (login.isLogined()) { %>
             <ul>
-                <% int i;
-                    Message[] messages = index.getMessages();
+                <% Message[] messages = index.getMessages();
                     for (i = 0; i < messages.length; i++) { %>
                 <li>
                     <% if (messages[i].getMsg_content().charAt(0) == '0') { %>
@@ -54,28 +62,35 @@
 
 
         <!--博文-->
-        <div class="col-md-10" style="background-color:#FFFFFF;min-height:600px;float:right;">
-            <h3>博文</h3>
-            <ul>
-                <%
-                    int i;
-                    Post[] posts = index.getPosts();
+        <div class="col-md-9" style="background-color:#FFFFFF;min-height:600px;float:right;margin-right:3%">
+            <h3 style="border-bottom:1px solid #dddddd">博文</h3>
+
+            <% Post[] posts = index.getPosts();
                     for (i = 0; i < posts.length; i++) { %>
-                <li>
-                    <a href="handleRead?postID=<%= posts[i].getID()%>">
+            <div style="border-bottom:1px solid #dddddd">
+                <a href="handleRead?postID=<%= posts[i].getID()%>" style="font-size:25px;color:#000000">
                         <%= posts[i].getTitle()%>
                     </a><br>
+
                     <p style="font-size:15px;color:#707070">
-                        <scan>作者：<%= posts[i].getAuthor() + "  " %>
+                        <scan>
+                            <% if (posts[i].getType() == 1) { %>
+                            原创
+                            <% } else if (posts[i].getType() == 2) { %>
+                            转载
+                            <% } else if (posts[i].getType() == 3) { %>
+                            翻译
+                            <% } %>
                         </scan>
-                        <scan>阅读量：<%= posts[i].getNumReads() + "  " %>
+                        <scan style="margin-left:10px">作者：<%= posts[i].getAuthor() + "  " %>
                         </scan>
-                        <scan><%= posts[i].getPost_timestamp() %>
+                        <scan style="margin-left:10px">阅读量：<%= posts[i].getNumReads() + "  " %>
+                        </scan>
+                        <scan style="float:right;margin-left:20px"><%= posts[i].getPost_timestamp() %>
                         </scan>
                     </p>
-                </li>
+            </div>
                 <% } %>
-            </ul>
             <!--更多博文(每点击一次就多展示N条博文）-->
             <a href="handleIndex?postNum=<%= posts.length+10 %>&postType=<%= index.getPostType() %>">更多博文</a>
         </div>

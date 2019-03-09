@@ -1,3 +1,4 @@
+<%@ page import="mybean.data.Group" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <jsp:useBean id="personalInfo" class="mybean.data.PersonalInfo" scope="request"/>
 
@@ -27,7 +28,7 @@
                                     for (i = 0; i < groups.length; i++) { %>\
                                     <li>\
                                         <div class=\"checkbox\"><label>\
-                                            <input type=\"checkbox\" name=\"share_group\" value=\"<%= personalInfo.getGroupIDs()[i]%>\">\
+                                            <input type=\"checkbox\" name=\"share_group\" value=\"<%= groups[i].getGid()%>\">\
                                             <%= groups[i].getGname() %>\
                                         </label></div>\
                                     </li>\
@@ -80,75 +81,41 @@
 
         <!--上传资源-->
         <form action="handleWrite" method="post" enctype="multipart/form-data">
-            <div class="col-md-8" style="background-color: #FFFFFF;height:600px;border:3px solid #00FF00">
+            <div class="col-md-10" style="background-color: #FFFFFF;height:600px;border:3px solid #00FF00">
                 <h4>上传资源</h4>
                 <a class="btn" href="handleWrite?action=edit">编辑文章</a>
-                <div class="form-group">
-                    <br/>
-                    <label for="title" class="sr-only">标题</label>
-                    <input type="text" class="form-control" placeholder="标题" name="title" id="title"
-                           required/><br/><br/>
+                <label for="title" class="sr-only">标题</label>
+                <input type="text" class="form-control" style="width:400px" placeholder="标题" name="title" id="title"
+                       required/><br/>
 
-                    <input type="file" name="file" size="50"/>
-                    <br/>
-                    <input type="submit" value="Upload File"/>
-                </div>
-            </div>
-
-
-            <!--博文分类-->
-            <div class="col-md-2" style="background-color: #FFFFFF;height:600px;border:3px solid #00FF00">
-                <h4>设置</h4>
-
+                <input type="file" name="file" size="50" style="width:400px"/>
                 <br/>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        个人分类
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <% int i;
-                            for (i = 0; i < personalInfo.getClasses().length; i++) { %>
-                        <li>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="self_classification"
-                                           value="<%=personalInfo.getClasses()[i]%>">
-                                    <%=personalInfo.getClasses()[i]%>
-                                </label>
-                            </div>
+                <div class="btn-group-vertical">
+                    <a class="btn btn-sm btn-default" onclick="shInGroups()">选择groups</a>
+                    <div id="share">
+                        <li class="dropdown" style="display:inline-block">
+
+                            <a href="handle" class="dropdown-toggle btn btn-sm btn-default" data-toggle="dropdown">
+                                公开/私密
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <div class="radio"><label>
+                                        <input type="radio" name="private_switch" id="public" value="0" checked>公开
+                                    </label></div>
+                                </li>
+                                <li>
+                                    <div class="radio"><label>
+                                        <input type="radio" name="private_switch" id="private" value="1" checked>私密
+                                    </label></div>
+                                </li>
+                            </ul>
                         </li>
-                        <% } %>
-                    </ul>
-                </li>
-
-                <br/>
-                <div id="share">
-                    <a class="btn" onclick="shInGroups()">选择groups</a>
-                    <li class="dropdown" style="margin-left:3%;display:inline-block">
-
-                        <a href="handle" class="dropdown-toggle" data-toggle="dropdown">
-                            公开/私密
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <div class="radio"><label>
-                                    <input type="radio" name="private_switch" id="public" value="0" checked>公开
-                                </label></div>
-                            </li>
-                            <li>
-                                <div class="radio"><label>
-                                    <input type="radio" name="private_switch" id="private" value="1" checked>私密
-                                </label></div>
-                            </li>
-                        </ul>
-                    </li>
+                    </div>
+                    <input type="submit" value="上传" class="btn btn-sm btn-default"/>
+                    <a href="handleIndex" class="btn btn-sm btn-default">返回</a>
                 </div>
-                <br/><br/>
-
-                <input class="btn btn-sm btn-primary" name="submit" value="uploadFile" type="submit"/><br/>
-                <a href="handleIndex" class="btn btn-sm btn-primary">返回</a>
             </div>
         </form>
     </div>

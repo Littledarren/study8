@@ -24,7 +24,7 @@
                 User user = personalInfo.getUser();
             %>
             <img src="<%= user.getProfile_photo() %>" class="img-circle" style="width:80;height:80px;">
-            <a href="handleRead?type=attention" class="btn btn-default"> 关注</a>
+
             <div style="height:270px;background-color:#FFFFFF;border-bottom:2px solid #00FF00;">
                 <p>昵称：
                     <%= user.getUname() %>
@@ -39,7 +39,7 @@
                     <%= user.getProfession() %>
                 </p>
                 <p>积分：
-                    <%= user.getPoints() %>
+                    <%= user.getPoints()%>
                 </p>
                 <p>排名：
                     <%= 1 %>
@@ -156,7 +156,7 @@
             <div class="btn-group-vertical">
                 <a class="btn btn-default" href="handleRead?postID=<%= post.getID() %>&type=like">点赞</a>
                 <a class="btn btn-default" href="handleRead?postID=<%= post.getID() %>&type=collect">收藏</a>
-                <a class="btn btn-default" href="handleRead?postID=<%= post.getID() %>&type=comment">评论</a>
+                <a class="btn btn-default" href="handleRead?type=attention&userID=<%= user.getMail() %>">关注</a>
             </div>
         </div>
     </div>

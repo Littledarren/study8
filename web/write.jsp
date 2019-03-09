@@ -5,6 +5,15 @@
 <!doctype html>
 <html>
 <head>
+    <style>
+        body {
+            background-image: url("images/6.jpg");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    </style>
     <title>write</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,8 +25,8 @@
         function shInGroups() {
             var x = document.getElementById("share");
             x.innerHTML = "<div id=\"cancel\">\
-                            <a class=\"btn\" onclick=\"cancel()\">取消</a>\
-                            <li class=\"dropdown\" style=\"margin-left:3%;display:inline-block\">\
+                            <a class=\"btn btn-default\" onclick=\"cancel()\">取消</a>\
+                            <li class=\"dropdown\" style=\"display:inline-block\">\
                                 <a href=\"#\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\">\
                                     选择groups\
                                     <b class=\"caret\"></b>\
@@ -42,9 +51,9 @@
         function cancel() {
             var x = document.getElementById("cancel");
             x.innerHTML = "<div id=\"share\">\
-                    <a class=\"btn\" onclick=\"shInGroups()\">选择groups</a>\
-                    <li class=\"dropdown\" style=\"margin-left:3%;display:inline-block\">\
-                        <a href=\"handle\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">\
+                    <a class=\"btn btn-default\" onclick=\"shInGroups()\">选择groups</a>\
+                    <li class=\"dropdown\" style=\"display:inline-block\">\
+                        <a href=\"handle\" class=\"dropdown-toggle btn btn-default\" data-toggle=\"dropdown\">\
                             公开/私密\
                             <b class=\"caret\"></b>\
                         </a>\
@@ -71,21 +80,31 @@
 <div class="container">
     <div class="row">
         <!--管理-->
-        <div class="col-md-2" style="background-color: #FFFFFF;height:600px;float:left;margin-left:3%">
+        <%--<div class="col-md-2" style="background-color: #FFFFFF;height:600px;float:left;margin-left:2%">--%>
+        <%--<h4>管理</h4>--%>
+        <%--<br/>--%>
+        <%--<div class="btn-group-vertical">--%>
+        <%--<a class="btn btn-default">文章管理</a>--%>
+        <%--<a class="btn btn-default">个人分类管理</a>--%>
+        <%--<a class="btn btn-default">评论管理</a>--%>
+        <%--</div>--%>
+        <%--</div>--%>
+
+        <div class="col-6 col-md-2" id="sidebar"
+             style="background-color: #FFFFFF;height:600px;border:0.1px solid #ffffff">
             <h4>管理</h4>
-            <br/>
-            <div class="btn-group-vertical">
-                <a class="btn btn-default">文章管理</a>
-                <a class="btn btn-default">个人分类管理</a>
-                <a class="btn btn-default">评论管理</a>
+            <div class="list-group">
+                <a class="list-group-item" href="#" target="">文章管理</a>
+                <a class="list-group-item" href="#" target="">个人分类管理</a>
+                <a class="list-group-item" href="#" target="">评论管理</a>
             </div>
         </div>
 
         <!--编辑博文-->
         <form action="handleWrite" method="POST">
-            <div class="col-md-8" style="background-color: #FFFFFF;height:600px;float:left;margin-left:3%">
+            <div class="col-md-7" style="background-color: #FFFFFF;height:600px;float:left;margin-left:2%">
                 <h4>编辑博文</h4>
-                <a class="btn" href="handleWrite?action=upload">上传文件</a>
+                <a class="btn btn-default" href="handleWrite?action=upload">上传文件</a>
                 <div class="form-group">
                     <br/>
                     <label for="title" class="sr-only">标题</label>
@@ -98,10 +117,11 @@
 
 
             <!--博文分类-->
-            <div class="col-md-2" style="background-color: #FFFFFF;height:600px;float:right;margin-right:3%">
+            <div class="col-md-2"
+                 style="background-color: #FFFFFF;height:600px;float:right;margin-right:2%;text-align:center">
                 <h4>设置</h4>
                 <div class="btn-group-vertical">
-                    <li class="dropdown">
+                    <div class="dropdown">
                         <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             文章类型
                             <b class="caret"></b>
@@ -123,9 +143,9 @@
                                 </label></div>
                             </li>
                         </ul>
-                    </li>
+                    </div>
 
-                    <li class="dropdown">
+                    <div class="dropdown">
                         <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             博客类型
                             <b class="caret"></b>
@@ -167,9 +187,9 @@
                                 </label></div>
                             </li>
                         </ul>
-                    </li>
+                    </div>
 
-                    <li class="dropdown">
+                    <div class="dropdown">
                         <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             个人分类
                             <b class="caret"></b>
@@ -188,12 +208,12 @@
                             </li>
                             <% } %>
                         </ul>
-                    </li>
+                    </div>
 
 
                     <div id="share">
-                        <a class="btn" onclick="shInGroups()">选择groups</a>
-                        <li class="dropdown" style="margin-left:3%;display:inline-block">
+                        <a class="btn btn-default" onclick="shInGroups()">选择groups</a>
+                        <li class="dropdown" style="display:inline-block">
 
                             <a href="handle" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 公开/私密
@@ -215,10 +235,11 @@
                     </div>
                 </div>
                 <br/><br/>
-
-                <input class="btn btn-sm btn-primary" name="submit" value="保存草稿" type="submit"/><br/>
-                <input class="btn btn-sm btn-primary" name="submit" value="发布" type="submit"/><br/>
-                <a href="handleIndex" class="btn btn-sm btn-primary">返回</a>
+                <div class="btn-group-vertical">
+                    <input class="btn btn-md btn-primary" name="submit" value="保存草稿" type="submit"/>
+                    <input class="btn btn-md btn-primary" name="submit" value="发布" type="submit"/>
+                    <a class="btn btn-sm btn-primary" href="handleIndex">返回</a>
+                </div>
             </div>
         </form>
     </div>
