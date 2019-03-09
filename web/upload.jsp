@@ -83,7 +83,7 @@
         <form action="handleWrite" method="post" enctype="multipart/form-data">
             <div class="col-md-10" style="background-color: #FFFFFF;height:600px;border:3px solid #00FF00">
                 <h4>上传资源</h4>
-                <a class="btn" href="handleWrite?action=edit">编辑文章</a>
+                <a class="btn btn-default" href="handleWrite?action=edit">编辑文章</a><br/>
                 <label for="title" class="sr-only">标题</label>
                 <input type="text" class="form-control" style="width:400px" placeholder="标题" name="title" id="title"
                        required/><br/>

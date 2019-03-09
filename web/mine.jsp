@@ -116,7 +116,7 @@
                     <%= user.getPoints() %>
                 </p>
                 <p style="font-size:15px">排名：
-                    1
+                    <%= personalInfo.getRank() %>
                 </p>
             </div>
             <table class="table">

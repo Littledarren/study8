@@ -23,63 +23,58 @@
             <%
                 User user = personalInfo.getUser();
             %>
-            <img src="<%= user.getProfile_photo() %>" class="img-circle" style="width:80;height:80px;">
 
-            <div style="height:270px;background-color:#FFFFFF;border-bottom:2px solid #00FF00;">
-                <p>昵称：
-                    <%= user.getUname() %>
+            <div style="text-align:center">
+                <img src="<%= user.getProfile_photo() %>" class="img-circle" style="width:80;height:80px;">
+                <p>昵称：<%= user.getUname() %>
                 </p>
-                <p>性别：
-                    <%= user.getSex() %>
+                <p>性别：<%= user.getSex() %>
                 </p>
-                <p>高校：
-                    <%= user.getCollege() %>
+                <p>高校：<%= user.getCollege() %>
                 </p>
-                <p>专业：
-                    <%= user.getProfession() %>
+                <p>专业：<%= user.getProfession() %>
                 </p>
-                <p>积分：
-                    <%= user.getPoints()%>
+                <p align="center">积分：<%= user.getPoints()%>
                 </p>
-                <p>排名：
-                    <%= 1 %>
+                <p align="center">排名：<%= personalInfo.getRank() %>
                 </p>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>文章</th>
-                        <th>粉丝</th>
-                        <th>点赞</th>
-                        <th>评论</th>
-                        <th>阅读</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>
-                            <%= personalInfo.getNumArticles() %>
-                        </td>
-                        <td>
-                            <%= personalInfo.getNumFans() %>
-                        </td>
-                        <td>
-                            <%= personalInfo.getNumLikes() %>
-                        </td>
-                        <td>
-                            <%= personalInfo.getNumComments() %>
-                        </td>
-                        <td>
-                            <%= personalInfo.getNumReads() %>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
             </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>文章</th>
+                    <th>粉丝</th>
+                    <th>点赞</th>
+                    <th>评论</th>
+                    <th>阅读</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <%= personalInfo.getNumArticles() %>
+                    </td>
+                    <td>
+                        <%= personalInfo.getNumFans() %>
+                    </td>
+                    <td>
+                        <%= personalInfo.getNumLikes() %>
+                    </td>
+                    <td>
+                        <%= personalInfo.getNumComments() %>
+                    </td>
+                    <td>
+                        <%= personalInfo.getNumReads() %>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <hr/>
 
             <!--该博主的最新博文-->
             <div style="height:200px;background-color:#FFFFFF">
                 <h5><b>最新博文</b></h5>
-                <ul>
+                <ul style="list-style-type:circle">
                     <% int i;
                         Post[] posts = personalInfo.getPosts();
                         for (i = 0; i < posts.length; i++) { %>
@@ -110,6 +105,7 @@
                 </p>
             </div>
             <br/>
+            <hr/>
             <!--Write comments-->
             <div>
                 <form role="form" action="handleRead" method="POST">
@@ -118,7 +114,7 @@
                         <input type="text" name="comment" class="form-control" id="title" placeholder="评论">
                         <input type="hidden" name="postID" value="<%= post.getID()%>"/>
                     </div>
-                    <button type="submit" class="btn btn-default">发表</button>
+                    <button type="submit" class="btn btn-sm">发表</button>
                 </form>
             </div>
             <!--Read comments-->
@@ -149,17 +145,18 @@
                             "                        <input type=\"text\" class=\"form-control\" id=\"name\" name=\"replyContent\" placeholder=\"回复\"/>\n" +
                             "                    <input type=\"hidden\" class=\"form-control\" name=\"replyTo\" value=\"<%= comments[i].getID() %>\"/>" +
                             "                    <input type=\"hidden\" name=\"postID\" value=\"<%= post.getID()%>\" />" +
-                            "                    <button type=\"submit\" class=\"btn btn-default\ onclick=\"cancel()\" >发表</button>\n" +
-                            "                    <button class=\"btn btn-default\" onclick=\"cancel()\">取消</button>\n" +
+                            "                    <button type=\"submit\" class=\"btn btn-sm\" onclick=\"cancel()\" >发表</button>\n" +
+                            "                    <button class=\"btn btn-sm\" onclick=\"cancel()\">取消</button>\n" +
                             "                </div></form>";    // 改变内容
                     }
 
                     function cancel() {
                         var x = document.getElementById("cancel<%= i %>");  // 找到元素
-                        x.innerHTML = "<span id=\"reply<%= i %>\"><button type=\"button\" onclick=\"inputReply()\">回复</button></span>";
+                        x.innerHTML = "<span id=\"reply<%= i %>\"><button class=\"btn btn-sm\" type=\"button\" onclick=\"inputReply()\">回复</button></span>";
                     }
                 </script>
-                <span id="reply<%= i %>"><button type="button" onclick="inputReply()">回复</button></span>
+                <span id="reply<%= i %>"><button class="btn btn-sm" type="button"
+                                                 onclick="inputReply()">回复</button></span>
                 <% } %>
             </div>
         </div>
@@ -168,13 +165,26 @@
         <!--一些按钮-->
         <div class="col-md-1" style="height:200px;background-color:#00FF00;border:3px solid #00FF00;">
             <div class="btn-group-vertical">
-                <a class="btn btn-default" href="handleRead?postID=<%= post.getID() %>&type=like">点赞</a>
+                <span id="like"><a class="btn btn-default" href="handleRead?postID=<%= post.getID() %>&type=like"
+                                   onclick="likeClick('like')">点赞</a></span>
                 <a class="btn btn-default" href="handleRead?postID=<%= post.getID() %>&type=collect">收藏</a>
                 <a class="btn btn-default" href="handleRead?type=attention&userID=<%= user.getMail() %>">关注</a>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function likeClick(_type) {
+        if (_type == "like") {
+            var x = document.getElementById("like");
+            x.innerHTML = "<span id=\"unlike\"><a  class=\"btn btn-default\" href=\"handleRead?postID=<%= post.getID() %>&type=unlike\" onclick=\"likeClick('unlike')\">取消点赞</a></span>";；
+        } else if (_type == "unlike") {
+            var x = document.getElementById("unlike");
+            x.innerHTML = "<span id=\"like\"><a  class=\"btn btn-default\" href=\"handleRead?postID=<%= post.getID() %>&type=like\" onclick=\"likeClick('like')\">点赞</a></span>";；
+        }
+    }
+</script>
 </body>
 </html>
+
 

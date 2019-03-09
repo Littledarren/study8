@@ -72,6 +72,10 @@
                     </li>\
                 </div>";
         }
+
+        function release() {
+            window.alert("发布成功");
+        }
     </script>
     <%@ include file="nav.txt" %>
 </head>
@@ -238,7 +242,7 @@
                 <br/><br/>
                 <div class="btn-group-vertical">
                     <input class="btn btn-md btn-primary" name="submit" value="保存草稿" type="submit"/>
-                    <input class="btn btn-md btn-primary" name="submit" value="发布" type="submit"/>
+                    <input class="btn btn-md btn-primary" name="submit" value="发布" type="submit" onclick="release()"/>
                     <a class="btn btn-sm btn-primary" href="handleIndex">返回</a>
                 </div>
             </div>

@@ -8,15 +8,26 @@ public class PersonalInfo {
 
     User user = new User();
 
+    int rank = 1;
+
     Post[] posts = new Post[0]; //个人发布的博文的ID与题目
 
     int numArticles = 0, numFans = 0, numLikes = 0, numComments = 0, numReads = 0;
 
     Group[] groups = new Group[0];
+
+
     String[] classes = {"test"}; //个人分类
 
     String backNews;
 
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
 
     public User getUser() {
         return user;
